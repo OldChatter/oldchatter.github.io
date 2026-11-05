@@ -9,7 +9,27 @@ if (tg) {
   try { if (tg.disableVerticalSwipes) tg.disableVerticalSwipes(); } catch (_) { /* older Telegram */ }
   try { if (mobile && tg.isVersionAtLeast('8.0') && tg.requestFullscreen) tg.requestFullscreen(); } catch (_) { /* not available */ }
 }
-if (!mobile) { document.body.classList.add('phone'); document.documentElement.classList.add('phone-bg'); }
+// wide window (a tablet, or a browser on Windows): three columns like a desktop chat app: rooms and contacts | chat | webcams and members
+// narrower than that it stays the phone layout
+const wide = matchMedia('(min-width: 900px)');
+function applyLayout() {
+  const on = wide.matches;
+  document.body.classList.toggle('desk', on);
+  document.body.classList.toggle('phone', !on && !mobile);
+  document.documentElement.classList.toggle('phone-bg', !on && !mobile);
+  const room = document.getElementById('room'); let side = document.getElementById('side');
+  if (on && !side) {   // the right column holds the webcams above the member list
+    side = document.createElement('div'); side.id = 'side';
+    side.append(document.getElementById('cams'), document.getElementById('userlist')); room.append(side);
+  } else if (!on && side) {
+    document.getElementById('strip').after(document.getElementById('cams')); room.append(document.getElementById('userlist')); side.remove();
+  }
+  const signedIn = ['login', 'reg'].every((s) => document.getElementById(s).hidden) && ['main', 'room', 'pm', 'profile', 'settings'].some((s) => !document.getElementById(s).hidden);
+  if (on && signedIn) document.getElementById('main').hidden = false;   // the window was widened while a chat was open: the list comes back on the left
+  if (!on && ['room', 'pm', 'profile', 'settings'].some((s) => !document.getElementById(s).hidden)) document.getElementById('main').hidden = true;   // narrowed again: one screen at a time
+}
+applyLayout();
+wide.addEventListener('change', applyLayout);
 // look and feel, kept on this device: text size, join/leave notices and the theme (Auto follows Telegram)
 const prefs = { size: 'medium', joinleave: true, mode: 'auto' };
 try { Object.assign(prefs, JSON.parse(localStorage.getItem('prefs') || '{}')); } catch (_) { /* storage can be blocked */ }
@@ -40,7 +60,8 @@ let ws, ping, retry, wantOnline = false, dev = '', tries = 0, lastRx = 0;
 
 const planColor = (p) => PLAN[Math.min(Math.max(p || 0, 0), 6)];
 const show = (id) => {
-  ['login', 'reg', 'main', 'room', 'pm', 'settings', 'profile'].forEach((s) => { $(s).hidden = s !== id; });
+  const desk = document.body.classList.contains('desk') && id !== 'login' && id !== 'reg';   // wide screens keep the room/contact list on the left
+  ['login', 'reg', 'main', 'room', 'pm', 'settings', 'profile'].forEach((s) => { $(s).hidden = s !== id && !(desk && s === 'main'); });
   $('smilebox').hidden = true; $('menu').hidden = true; $('sheet').hidden = true;
   if (tg && tg.BackButton) (id === 'reg' || id === 'room' || id === 'pm' || id === 'settings' || id === 'profile' ? tg.BackButton.show() : tg.BackButton.hide());
 };

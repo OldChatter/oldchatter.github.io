@@ -213,3 +213,34 @@ input[type=password]{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-
 .replybar{display:flex;align-items:center;gap:8px;padding:6px 12px;border-left:3px solid var(--qc,var(--hint));background:color-mix(in srgb,var(--qc,#8884) 12%,var(--bg));font-size:13px}
 .replybar[hidden]{display:none}.replybar .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.replybar b{color:var(--qc,var(--hint))}
 .replybar .x{background:none;border:0;color:var(--hint);font-size:16px;padding:2px 8px}
+
+/* wide window (tablet, or a browser on Windows): rooms and contacts | chat | webcams and members */
+#deskhello{display:none}
+@media (min-width:900px){
+  body.desk{display:grid;grid-template-columns:minmax(300px,24vw) minmax(0,1fr);height:100dvh;overflow:hidden;background:var(--bg)}
+  body.desk .screen{height:100dvh;min-height:0;grid-row:1}
+  body.desk #login,body.desk #reg{grid-column:1/-1;width:100%;max-width:440px;margin:0 auto}
+  body.desk #main{grid-column:1;border-right:1px solid var(--card)}
+  body.desk #room,body.desk #pm,body.desk #profile,body.desk #settings{grid-column:2}
+  body.desk #deskhello{grid-column:2;grid-row:1;place-items:center;text-align:center;color:var(--hint);background:var(--card)}
+  body.desk:has(#main:not([hidden])):not(:has(#room:not([hidden]),#pm:not([hidden]),#profile:not([hidden]),#settings:not([hidden]))) #deskhello{display:grid}
+  #deskhello img{width:96px;height:96px;border-radius:22px;opacity:.9}#deskhello h2{margin:12px 0 4px;color:var(--fg)}
+  body.desk #roomback{display:none}
+  body.desk #main .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  /* the room: title and strip across the top, chat on the left, webcams and members on the right */
+  body.desk #room:not([hidden]){display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,22vw);grid-template-rows:auto auto minmax(0,1fr) auto auto auto auto}
+  body.desk #room>header{grid-column:1/-1;grid-row:1}
+  body.desk #strip{grid-column:1/-1;grid-row:2}
+  body.desk #lines{grid-column:1;grid-row:3;min-height:0}
+  body.desk #speakers{grid-column:1;grid-row:4}
+  body.desk #room>.smilebox{grid-column:1;grid-row:5}
+  body.desk #replybar{grid-column:1;grid-row:6}
+  body.desk #roomform{grid-column:1;grid-row:7}
+  body.desk #side{grid-column:2;grid-row:3/8;display:flex;flex-direction:column;min-height:0;border-left:1px solid var(--card);background:var(--bg)}
+  body.desk #side .cams{flex:none;flex-direction:column;max-height:48%;overflow-y:auto;overflow-x:hidden;padding:8px}
+  body.desk #side .tile,body.desk #side .tile.big{width:100%;height:auto;aspect-ratio:4/3;min-width:0}
+  body.desk #side .tile img,body.desk #side .tile video{width:100%;height:100%;object-fit:cover}
+  body.desk #userlist,body.desk #userlist[hidden]{display:block!important;position:static;width:auto;max-width:none;flex:1;min-height:0;box-shadow:none;border-left:0}
+  body.desk .msg{padding:12px 20px}
+  body.desk #lines .sys,body.desk #lines .msg .text{max-width:900px}
+}
