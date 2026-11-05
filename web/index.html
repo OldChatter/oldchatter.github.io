@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>OldChatter</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="login" class="screen pad">
+  <img class="logo" src="logo.png" alt="">
+  <h1>OldChatter</h1>
+  <input id="user" placeholder="Username" autocapitalize="off" autocomplete="username">
+  <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
+  <button id="go">Sign in</button>
+  <div id="err" class="err"></div>
+  <button id="toreg" class="link">Create a free account</button>
+</div>
+
+<div id="reg" class="screen pad scroll" hidden>
+  <img class="logo" src="logo.png" alt="">
+  <h1>Create account</h1>
+  <p class="lead">Free, takes a minute.</p>
+  <div class="fgroup"><h5>Sign-in</h5>
+    <input id="r-user" placeholder="Username (5+ letters or digits)" autocapitalize="off" autocomplete="off">
+    <input id="r-pass" type="password" placeholder="Password (6+ characters)" autocomplete="new-password">
+    <input id="r-pass2" type="password" placeholder="Repeat password" autocomplete="new-password">
+    <div id="r-pmatch" class="hintline"></div>
+  </div>
+  <div class="fgroup"><h5>About you</h5>
+    <div class="two"><input id="r-first" placeholder="First name"><input id="r-last" placeholder="Last name"></div>
+    <div class="seg wideseg" id="r-gender" role="radiogroup" aria-label="Gender"><button type="button" data-v="1">Male</button><button type="button" data-v="0">Female</button><button type="button" data-v="2" class="on">Other</button></div>
+    <div class="two"><input id="r-age" type="number" inputmode="numeric" placeholder="Age" min="10" max="120"><button type="button" id="r-country" class="pick" data-ic="chev">Country</button></div>
+  </div>
+  <div class="fgroup"><h5>Account recovery</h5>
+    <input id="r-email" type="email" placeholder="Email" autocapitalize="off" autocomplete="email">
+    <input id="r-answer" placeholder="Security answer (your first pet)">
+  </div>
+  <button id="r-go">Create account</button>
+  <div id="r-err" class="err"></div>
+  <button id="toLogin" class="link">I already have an account</button>
+</div>
+
+<div id="main" class="screen" hidden>
+  <header class="top"><span id="meav"></span><b id="me"></b><span id="net"></span><button id="addb" class="ob light" data-ic="adduser" aria-label="Add contact"></button><button id="setb" class="ob light" data-ic="gear" aria-label="Settings"></button></header>
+  <section id="tab-contacts" class="tab"></section>
+  <section id="tab-rooms" class="tab" hidden>
+    <div id="cats" class="chips"></div>
+    <div id="subs" class="chips"></div>
+    <div id="rooms" class="grid"></div>
+  </section>
+  <nav>
+    <button data-tab="contacts" class="on"><span data-ic="users"></span>Contacts</button>
+    <button data-tab="rooms"><span data-ic="chat"></span>Rooms</button>
+  </nav>
+</div>
+
+<div id="room" class="screen" hidden>
+  <header class="rh">
+    <button id="roomback" class="ob" data-ic="back" aria-label="Back"></button>
+    <span class="pill blue"><span data-ic="star"></span><b id="usercount">0</b></span>
+    <b id="roomname" class="title"></b>
+    <button id="spk" class="ob" data-ic="vol" aria-label="Sound"></button>
+    <button id="more" class="ob" data-ic="more" aria-label="Menu"></button>
+  </header>
+  <div id="strip" class="strip"></div>
+  <div id="cams" class="cams" hidden></div>
+  <div id="lines" class="lines rows"></div>
+  <div id="speakers" class="speakers" hidden></div>
+  <form id="roomform" class="send">
+    <button type="button" id="rsm" class="ib" data-ic="smile" aria-label="Smileys"></button>
+    <input id="roomtext" placeholder="Message" autocomplete="off">
+    <button type="button" id="mic" class="ib" data-ic="mic" aria-label="Microphone"></button>
+    <button type="button" id="cam" class="ib" data-ic="video" aria-label="Camera"></button>
+    <button class="sendb" data-ic="send" aria-label="Send"></button>
+  </form>
+  <aside id="userlist" hidden></aside>
+  <div id="menu" class="menu" hidden></div>
+</div>
+
+<div id="pm" class="screen" hidden>
+  <header class="rh"><button id="pmback" class="ob" data-ic="back" aria-label="Back"></button><span id="pmav"></span><div class="who2"><b id="pmname" class="title"></b><small id="pmsub" class="sub"></small></div></header>
+  <div id="pmlines" class="lines pmlines"></div>
+  <form id="pmform" class="send">
+    <button type="button" id="psm" class="ib" data-ic="smile" aria-label="Smileys"></button>
+    <input id="pmtext" placeholder="Message" autocomplete="off">
+    <button class="sendb" data-ic="send" aria-label="Send"></button>
+  </form>
+</div>
+
+<div id="profile" class="screen" hidden>
+  <header class="rh"><button id="profback" class="ob" data-ic="back" aria-label="Back"></button><b id="proftitle" class="title">Profile</b></header>
+  <div id="profbody" class="profbody"></div>
+</div>
+
+<div id="settings" class="screen" hidden>
+  <header class="rh"><button id="setback" class="ob" data-ic="back" aria-label="Back"></button><b class="title">Settings</b></header>
+  <div class="setbody">
+    <div class="profilecard">
+      <button id="avbtn" class="avwrap" aria-label="Change profile picture"><span id="setav"></span><span class="camb" data-ic="camera"></span></button>
+      <div class="pinfo"><b id="setname"></b><div class="sub">Tap the picture to change it</div></div>
+    </div>
+    <div class="btnrow"><button id="avchange" class="soft" data-ic="camera">Change picture</button><button id="avremove" class="soft">Remove</button><button id="viewprof" class="soft">My profile</button></div>
+    <input type="file" id="avfile" accept="image/*" hidden>
+
+    <h4>Status</h4>
+    <div class="group" id="statuses"></div>
+    <label class="opt"><span>Invisible <small class="sub">(appear offline)</small></span><input type="checkbox" class="sw" id="invis"></label>
+    <div class="addrow"><input id="custom" maxlength="60" placeholder="Custom status message"><button id="setcustom">Set</button></div>
+
+    <h4>Privacy <small>(accept only from my contact list)</small></h4>
+    <div class="group">
+      <label class="opt"><span>Private messages</span><input type="checkbox" class="sw" data-bit="1"></label>
+      <label class="opt"><span>Room invitations</span><input type="checkbox" class="sw" data-bit="2"></label>
+      <label class="opt"><span>Whispers</span><input type="checkbox" class="sw" data-bit="4"></label>
+      <label class="opt"><span>File transfers</span><input type="checkbox" class="sw" data-bit="8"></label>
+    </div>
+
+    <h4>Chat</h4>
+    <div class="group">
+      <div class="opt"><span>Text size</span><span class="seg" id="sizeseg"><button data-v="small">Small</button><button data-v="medium">Medium</button><button data-v="large">Large</button></span></div>
+      <label class="opt"><span>Show join and leave messages</span><input type="checkbox" class="sw" id="joinleave"></label>
+    </div>
+
+    <h4>Appearance</h4>
+    <div class="group"><div class="opt"><span>Theme</span><span class="seg" id="themeseg"><button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></span></div></div>
+
+    <h4>Blocked users</h4>
+    <div class="group" id="blocked"></div>
+    <div class="addrow"><input id="blockname" placeholder="Block a user name" autocapitalize="off"><button id="blockgo" class="soft">Block</button></div>
+
+    <h4>Account</h4>
+    <button id="chgpass" class="soft wide" data-ic="lock">Change password</button>
+    <button id="signout" class="out" data-ic="exit">Sign out</button>
+  </div>
+</div>
+
+<div id="sheet" class="sheet" hidden></div>
+<div id="cpick" class="sheet tall" hidden></div>
+<div id="smilebox" class="smilebox" hidden></div>
+<script src="config.js"></script>
+<script src="countries.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
