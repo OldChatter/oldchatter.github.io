@@ -632,7 +632,7 @@ async function startRec() {
     media.rec = { stream, src, proc };
   } catch (_) {
     send({ t: 'micfree', room: st.room && st.room.id });
-    alertMsg('Could not use the microphone. Allow microphone access for Telegram and try again.');
+    alertMsg('Could not use the microphone. Allow microphone access for this site and try again.');
   }
   mediaUI();
 }
@@ -672,7 +672,7 @@ async function startCam() {
     }, 200);
   } catch (_) {
     await stopCam();
-    alertMsg('Could not start the camera. Allow camera access for Telegram and try again.');
+    alertMsg('Could not start the camera. Allow camera access for this site and try again.');
   }
   mediaUI();
 }

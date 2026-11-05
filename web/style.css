@@ -200,3 +200,5 @@ input[type=password]{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-
 .sheet.tall{z-index:30;height:75dvh;max-height:75dvh;display:flex;flex-direction:column;overflow:hidden}
 .tall .clist{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .crow.sel{font-weight:700;color:var(--btn)}
+
+.installhint{text-align:center;color:var(--hint);font-size:14px;margin-top:4px}
