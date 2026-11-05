@@ -205,3 +205,11 @@ input[type=password]{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-
 .installhint{text-align:center;color:var(--hint);font-size:14px;margin-top:4px}
 
 .freezebar{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;padding:8px 16px;border-radius:20px;background:#1e9bdb;color:#fff;font-weight:600;font-size:14px;box-shadow:0 4px 16px #0004}.freezebar[hidden]{display:none}
+
+/* replies */
+.rq{display:block;margin:3px 0 4px;padding:3px 10px;border-left:3px solid var(--qc,var(--hint));border-radius:0 8px 8px 0;background:color-mix(in srgb,var(--qc,#8884) 14%,transparent);font-size:13px;line-height:17px;overflow:hidden;cursor:pointer}
+.rq b{display:block;color:var(--qc,var(--hint))}.rq span{display:block;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msg.hit{box-shadow:inset 4px 0 #f5b400}.msg.flash{animation:fl 1.8s}@keyframes fl{0%,60%{outline:2px solid #f5b400;outline-offset:-2px}100%{outline:2px solid transparent}}
+.replybar{display:flex;align-items:center;gap:8px;padding:6px 12px;border-left:3px solid var(--qc,var(--hint));background:color-mix(in srgb,var(--qc,#8884) 12%,var(--bg));font-size:13px}
+.replybar[hidden]{display:none}.replybar .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.replybar b{color:var(--qc,var(--hint))}
+.replybar .x{background:none;border:0;color:var(--hint);font-size:16px;padding:2px 8px}

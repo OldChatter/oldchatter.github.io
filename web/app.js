@@ -68,6 +68,8 @@ const PATHS = {
   chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
   lock: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
   shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  reply: '<polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/>',
+  copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
   pause: '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>',
   hand: '<path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>',
   info: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
@@ -350,6 +352,45 @@ function sysLine(box, text) {
   box.append(d); if (stick) box.scrollTop = box.scrollHeight;
 }
 
+// ---------- replies, like Telegram: the quoted message, in the colour of its sender's service, sits above the answer
+const FREE_Q = '#1A1A1A';
+const escH = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const quoteColor = (c) => (/^#[0-9a-fA-F]{6}$/.test(c || '') && c.toUpperCase() !== FREE_Q ? c : '');   // a Free user's near-black would vanish in dark mode
+function quoteBox(name, text, color) {
+  const q = el('div', 'rq'), c = quoteColor(color); if (c) q.style.setProperty('--qc', c);
+  q.append(el('b', '', name), el('span', '', text));
+  q.onclick = (e) => { e.stopPropagation(); jumpToQuote(q, name, text); };
+  return q;
+}
+function jumpToQuote(q, name, text) {
+  const snip = text.replace(/…$/, '').slice(0, 30);
+  for (let r = q.closest('.msg').previousElementSibling; r; r = r.previousElementSibling) {
+    const t = r.querySelector(':scope > .body > .text');
+    if (r.dataset.who && r.dataset.who.toLowerCase() === name.toLowerCase() && t && t.textContent.trim().startsWith(snip)) {
+      r.scrollIntoView({ block: 'center', behavior: 'smooth' }); r.classList.add('flash'); setTimeout(() => r.classList.remove('flash'), 1800); return;
+    }
+  }
+}
+function setReply(r) {   // r = { name, text, color } or null
+  st.reply = r; let bar = $('replybar');
+  if (!bar) { bar = el('div', 'replybar'); bar.id = 'replybar'; $('roomform').before(bar); }
+  bar.hidden = !r; bar.textContent = '';
+  if (!r) return;
+  const c = quoteColor(r.color); bar.style.setProperty('--qc', c || ''); if (!c) bar.style.removeProperty('--qc');
+  const t = el('span', 't'); t.append(el('b', '', 'Reply to ' + r.name), ' ' + r.text);
+  const x = el('button', 'x', '✕'); x.type = 'button'; x.onclick = () => setReply(null);
+  bar.append(t, x); $('roomtext').focus();
+}
+function msgSheet(who, text, color) {
+  const items = [];
+  if (who !== st.me) {
+    items.push(['reply', 'Reply to ' + who, () => setReply({ name: who, text: text.length > 90 ? text.slice(0, 90) + '…' : text, color })]);
+    items.push(['adduser', 'Mention ' + who, () => { const i = $('roomtext'); i.value += (i.value && !/\s$/.test(i.value) ? ' ' : '') + '@' + who + ' '; i.focus(); }]);
+  }
+  items.push(['copy', 'Copy message', async () => { try { await navigator.clipboard.writeText(text); } catch { const x = el('textarea'); x.value = text; document.body.append(x); x.select(); document.execCommand('copy'); x.remove(); } }]);
+  sheet(who, items);
+}
+
 function chatRow(box, who, html, u, time) {
   const plan = Math.min(Math.max((u && u.plan) || 0, 0), 6), tag = u && u.tag;
   const row = el('div', 'msg' + (plan > 0 ? ' plan' : ''));
@@ -360,8 +401,15 @@ function chatRow(box, who, html, u, time) {
   if (plan > 0) head.append(pill(PLAN_NAMES[plan], '', null, planColor(plan)));
   if (u && u.admin > 0) head.append(el('span', 'adm', 'A'));
   head.append(el('span', 'time', clock(time)));
+  const qm = /^\s*<span data-q="([^"]*)"><b>([^<]*)<\/b><br>([^<]*)<\/span>/.exec(html || '');   // a reply: the quoted message comes first
+  let q = null;
+  if (qm) { html = html.slice(qm[0].length); q = quoteBox(plain(qm[2]), plain(qm[3]), qm[1]); }
   const text = el('div', 'text'); rich(text, html);
-  body.append(head, text); row.append(body);
+  if (q) body.append(head, q, text); else body.append(head, text);
+  row.append(body);
+  row.dataset.who = who;
+  if ((qm && plain(qm[2]).toLowerCase() === String(st.me).toLowerCase()) || (st.me && who !== st.me && new RegExp('(^|\\s)@' + String(st.me).replace(/[^\w-]/g, '\\$&') + '(?![\\w-])', 'i').test(text.textContent))) row.classList.add('hit');   // somebody answered or mentioned me
+  row.onclick = (e) => { if (e.target.closest('a,.rq') || e.target === av || av.contains(e.target)) return; msgSheet(who, text.textContent, tag ? HELP : plan > 0 ? planColor(plan) : FREE_Q); };
   const stick = !frozen && box.scrollTop + box.clientHeight >= box.scrollHeight - 60;
   box.append(row); if (stick) box.scrollTop = box.scrollHeight;
 }
@@ -413,7 +461,7 @@ function joinRoom(r, code) {
 function leaveRoomUI(note, serverDone) {
   stopMedia(true);
   if (st.room && !serverDone) send({ t: 'leaveroom', room: st.room.id });
-  st.room = null; setFrozen(false); show('main'); reqRooms();
+  st.room = null; setFrozen(false); setReply(null); show('main'); reqRooms();
   if (note) alertMsg(note);
 }
 
@@ -962,7 +1010,8 @@ $('spk').onclick = () => { media.muted = !media.muted; setIcon($('spk'), media.m
 $('mic').onclick = toggleMic;
 $('cam').onclick = () => (media.camOn ? stopCam() : startCam());
 $('pmback').onclick = () => { st.pmTo = ''; show(st.pmFromRoom && st.room ? 'room' : 'main'); };
-$('roomform').onsubmit = (e) => { e.preventDefault(); $('smilebox').hidden = true; const t = $('roomtext').value.trim(); if (t && st.room) { send({ t: 'gmsg', room: st.room.id, text: toWire(t) }); $('roomtext').value = ''; } };
+$('roomform').onsubmit = (e) => { e.preventDefault(); $('smilebox').hidden = true; const t = $('roomtext').value.trim(); if (t && st.room) { const rp = st.reply, qw = rp ? `<span data-q="${/^#[0-9a-fA-F]{6}$/.test(rp.color || '') ? rp.color : '1'}"><b>${escH(rp.name)}</b><br>${escH(rp.text)}</span>` : ''; send({ t: 'gmsg', room: st.room.id, text: qw + toWire(t) }); $('roomtext').value = ''; setReply(null); } };
+$('lines').oncontextmenu = (e) => { if (e.target.closest('.msg')) return; e.preventDefault(); sheet('Chat', [['pause', frozen ? 'Unfreeze chat' : 'Freeze chat', () => setFrozen(!frozen)]]); };   // right-click on empty chat space (a message opens its own menu on tap)
 $('rsm').onclick = () => smilePicker($('roomtext'), $('roomform'));
 $('psm').onclick = () => smilePicker($('pmtext'), $('pmform'));
 $('pmform').onsubmit = (e) => { e.preventDefault(); $('smilebox').hidden = true; const t = $('pmtext').value.trim(); if (t && st.pmTo) { const w = toWire(t); send({ t: 'pm', to: st.pmTo, text: w }); addPM(st.pmTo, st.me, w); $('pmtext').value = ''; } };
