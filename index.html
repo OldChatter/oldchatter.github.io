@@ -32,6 +32,8 @@ nav .sp{flex:1}
 .btn.alt:hover{box-shadow:0 14px 36px #1fb86a70,inset 0 1px 0 #ffffff40}
 .btn small{display:block;font-weight:400;opacity:.85;font-size:12px;line-height:1.2}
 .btn svg{width:26px;height:26px;flex:none}
+.btn.web{background:linear-gradient(135deg,#7a4dff,#5a2fd6);box-shadow:0 8px 28px #7a4dff55,inset 0 1px 0 #ffffff40}
+.btn.web:hover{box-shadow:0 14px 36px #7a4dff80,inset 0 1px 0 #ffffff40}
 .btn.sm{padding:9px 16px;font-size:14px;border-radius:11px}
 
 .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 0 40px}
@@ -142,6 +144,9 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
         <a class="btn alt" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9h10v8a1 1 0 0 1-1 1h-1v3a1.2 1.2 0 0 1-2.4 0v-3h-1.2v3A1.2 1.2 0 0 1 9 21v-3H8a1 1 0 0 1-1-1zm-3 0a1.2 1.2 0 0 1 2.4 0v5A1.2 1.2 0 0 1 4 14zm14.6 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM7.2 8a4.8 4.8 0 0 1 9.6 0z"/></svg>
           <span>Download for Android<small>Android 6 or newer</small></span></a>
+      <a class="btn web" href="web/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        <span>Open in browser<small>iPhone, Android, any computer</small></span></a>
       </div>
       <p class="hint">Free account. Always the latest version.</p>
     </div>
@@ -187,7 +192,7 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
   <h2 class="rv">In the room in a minute</h2>
   <p class="sub rv">No setup, no fuss.</p>
   <div class="steps">
-    <div class="step rv"><h3>Download</h3><p>Get the app for Windows or Android.</p></div>
+    <div class="step rv"><h3>Download</h3><p>Get the app for Windows or Android, or open it in your browser.</p></div>
     <div class="step rv"><h3>Sign up free</h3><p>Create your account inside the app.</p></div>
     <div class="step rv"><h3>Join a room</h3><p>Choose a category, pick a room, say hello.</p></div>
   </div>
@@ -195,12 +200,12 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 
 <section>
   <div class="tag rv">Everywhere you are</div>
-  <h2 class="rv">One account, three ways in</h2>
+  <h2 class="rv">One account, every device</h2>
   <p class="sub rv">Your rooms and contacts follow you.</p>
   <div class="plat">
     <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><h3>Windows</h3><p>Desktop app, Windows 10 and 11</p></div>
     <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><h3>Android</h3><p>Phone app, Android 6 or newer</p></div>
-    <div class="pl rv"><svg viewBox="0 0 24 24"><path d="M22 3 2 11l6 2 2 7 3-4 5 4z"/></svg><h3>Telegram Mini App</h3><p>Inside Telegram, nothing to install</p></div>
+    <div class="pl rv"><svg viewBox="0 0 24 24"><path d="M22 3 2 11l6 2 2 7 3-4 5 4z"/></svg><h3>Web app</h3><p>Any browser. Add it to your iPhone or Android home screen</p></div>
   </div>
 </section>
 
@@ -216,6 +221,9 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
       <a class="btn alt" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9h10v8a1 1 0 0 1-1 1h-1v3a1.2 1.2 0 0 1-2.4 0v-3h-1.2v3A1.2 1.2 0 0 1 9 21v-3H8a1 1 0 0 1-1-1zm-3 0a1.2 1.2 0 0 1 2.4 0v5A1.2 1.2 0 0 1 4 14zm14.6 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM7.2 8a4.8 4.8 0 0 1 9.6 0z"/></svg>
         <span>Download for Android<small>Android 6 or newer</small></span></a>
+      <a class="btn web" href="web/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        <span>Open in browser<small>iPhone, Android, any computer</small></span></a>
     </div>
     <p style="margin-top:18px;font-size:13px;color:#c5d6f2">Windows may show an unknown-publisher warning because the installer is not code-signed. Choose More info, then Run anyway.</p>
   </div>
