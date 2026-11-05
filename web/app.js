@@ -68,6 +68,7 @@ const PATHS = {
   chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
   lock: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
   shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  pause: '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>',
   hand: '<path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>',
   info: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
   exit: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
@@ -323,18 +324,29 @@ function smilePicker(input, form) {
 }
 
 // ---------- chat rows, laid out like the Android app
+// Freeze: in a busy room the chat stops scrolling so you can scroll up and find a line; unfreezing jumps back to the newest message
+let frozen = false;
+function setFrozen(on) {
+  frozen = on;
+  let bar = $('freezebar');
+  if (!bar) { bar = el('button', 'freezebar'); bar.id = 'freezebar'; bar.onclick = () => setFrozen(false); document.body.append(bar); }
+  bar.textContent = 'Chat frozen – tap to resume';
+  bar.hidden = !on;
+  if (!on) { const b = $('lines'); b.scrollTop = b.scrollHeight; }
+}
+
 // "X has joined / left the room." in the same small amber lines as the Windows app
 const JOIN_COLOR = '#FFAA37', LEFT_COLOR = '#BB6B00';
 function joinLeaveLine(text, color) {
   if (!prefs.joinleave) return;
   const box = $('lines'), d = el('div', 'sys', text); d.style.cssText = `color:${color};font-size:13px;font-style:normal`;
-  const stick = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
+  const stick = !frozen && box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
   box.append(d); if (stick) box.scrollTop = box.scrollHeight;
 }
 
 function sysLine(box, text) {
   const d = el('div', 'sys'); rich(d, text);
-  const stick = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
+  const stick = !frozen && box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
   box.append(d); if (stick) box.scrollTop = box.scrollHeight;
 }
 
@@ -350,7 +362,7 @@ function chatRow(box, who, html, u, time) {
   head.append(el('span', 'time', clock(time)));
   const text = el('div', 'text'); rich(text, html);
   body.append(head, text); row.append(body);
-  const stick = box.scrollTop + box.clientHeight >= box.scrollHeight - 60;
+  const stick = !frozen && box.scrollTop + box.clientHeight >= box.scrollHeight - 60;
   box.append(row); if (stick) box.scrollTop = box.scrollHeight;
 }
 
@@ -401,7 +413,7 @@ function joinRoom(r, code) {
 function leaveRoomUI(note, serverDone) {
   stopMedia(true);
   if (st.room && !serverDone) send({ t: 'leaveroom', room: st.room.id });
-  st.room = null; show('main'); reqRooms();
+  st.room = null; setFrozen(false); show('main'); reqRooms();
   if (note) alertMsg(note);
 }
 
@@ -567,6 +579,7 @@ function roomMenu() {
   m.textContent = '';
   const add = (ic, label, fn) => { const b = el('button'); b.append(icon(ic), label); b.onclick = () => { m.hidden = true; fn(); }; m.append(b); };
   add('users', 'Members', () => { $('userlist').hidden = !$('userlist').hidden; });
+  add('pause', frozen ? 'Unfreeze chat' : 'Freeze chat', () => setFrozen(!frozen));
   add('info', 'Room info', roomInfo);
   add('hand', media.hand ? 'Lower hand' : 'Raise hand', () => send({ t: 'hand', room: st.room.id, value: media.hand ? 0 : 1 }));
   add('adduser', 'Invite a contact', inviteSheet);

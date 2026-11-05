@@ -203,3 +203,5 @@ input[type=password]{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-
 .crow.sel{font-weight:700;color:var(--btn)}
 
 .installhint{text-align:center;color:var(--hint);font-size:14px;margin-top:4px}
+
+.freezebar{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;padding:8px 16px;border-radius:20px;background:#1e9bdb;color:#fff;font-weight:600;font-size:14px;box-shadow:0 4px 16px #0004}.freezebar[hidden]{display:none}
