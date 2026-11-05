@@ -73,10 +73,6 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--cyan),var(--blue
 .f1{left:2%;top:60px}.f2{right:0;top:150px;animation-delay:-1.7s}.f3{left:6%;bottom:90px;animation-delay:-3s}.f4{right:4%;bottom:50px;animation-delay:-4s}
 @keyframes bob{50%{transform:translateY(-16px) rotate(6deg)}}
 
-.marq{overflow:hidden;border-block:1px solid #ffffff10;background:#ffffff05;padding:18px 0;margin:30px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.track{display:flex;gap:46px;width:max-content;animation:scroll 32s linear infinite}
-.track img{height:40px;width:auto}
-@keyframes scroll{to{transform:translateX(-50%)}}
 
 
 .shot{max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;border:1px solid #ffffff22;box-shadow:0 40px 90px #000a,0 0 70px #2b8cf033;transition:transform .4s}
@@ -138,7 +134,7 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
     <div>
       <span class="pillt"><i></i> Rooms are open right now</span>
       <h1>Talk. Show. <em>Hang out.</em></h1>
-      <p class="lead">Voice and video chat rooms in the classic style. Take the mic, switch on your webcam, whisper to a friend, and fill the room with animated smileys.</p>
+      <p class="lead">Voice and video chat rooms in the classic style. Take the mic, switch on your webcam, and whisper to a friend.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatterSetup.exe">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>
@@ -151,7 +147,7 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
     </div>
 
     <div class="stage">
-      <img class="fl f1" src="img/s2.webp" alt=""><img class="fl f2" src="img/s5.webp" alt=""><img class="fl f3" src="img/s8.webp" alt=""><img class="fl f4" src="img/s11.webp" alt="">
+      
       <div class="phone"><div class="screen">
         <div class="ph"><span class="badge">Extra</span><b>Night Lounge</b><span class="on">&#9679; 24</span></div>
         <div class="cam"><span>LIVE</span></div>
@@ -163,7 +159,6 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
   </div>
 </div>
 
-<div class="marq" aria-hidden="true"><div class="track" id="track"></div></div>
 
 <div class="wrap">
 <section>
@@ -211,7 +206,7 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 
 <section id="get">
   <div class="final rv">
-    <img class="fl2" src="img/s3.webp" alt="" style="left:6%;top:24px;height:54px"><img class="fl2" src="img/s6.webp" alt="" style="right:7%;top:30px;height:54px;animation-delay:-2s"><img class="fl2" src="img/s9.webp" alt="" style="left:12%;bottom:26px;height:50px;animation-delay:-4s"><img class="fl2" src="img/s1.webp" alt="" style="right:11%;bottom:30px;height:50px;animation-delay:-1s">
+    
     <h2>Your room is waiting</h2>
     <p>Download OldChatter and say hello.</p>
     <div class="cta">
@@ -229,22 +224,17 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 <footer>OldChatter</footer>
 
 <script>
-// smiley marquee (the list is doubled so the loop is seamless)
-var tr = document.getElementById('track'), h = '';
-for (var k = 0; k < 2; k++) for (var i = 0; i < 12; i++) h += '<img src="img/s' + i + '.webp" alt="">';
-tr.innerHTML = h;
 
 // the little chat in the phone: a made-up conversation that plays on a loop
-var S = function (n) { return ' <img src="img/s' + n + '.webp" alt="">'; };
 var script = [
   ['sys', 'Maya joined'],
-  ['Maya', 'hey everyone' + S(0), '#d7759c'],
-  ['Leo', 'welcome back Maya' + S(2), '#5fd04a'],
+  ['Maya', 'hey everyone', '#d7759c'],
+  ['Leo', 'welcome back Maya', '#5fd04a'],
   ['me', 'hi! who has the mic?'],
-  ['Sam', 'you can take it, going quiet now' + S(5), '#e0b82a'],
+  ['Sam', 'you can take it, going quiet now', '#e0b82a'],
   ['sys', 'Dana joined'],
-  ['Dana', 'this room never sleeps' + S(8), '#b27cff'],
-  ['me', 'love it here' + S(1)]
+  ['Dana', 'this room never sleeps', '#b27cff'],
+  ['me', 'love it here']
 ];
 var box = document.getElementById('msgs'), n = 0;
 function step() {
