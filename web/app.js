@@ -1025,7 +1025,7 @@ document.querySelectorAll('nav button').forEach((b) => {
 // tap anywhere else closes the menu, the member list and the sheet
 document.addEventListener('click', (e) => {
   if (!e.target.closest('#menu, #more')) $('menu').hidden = true;
-  if (!e.target.closest('#sheet, .row, .av, #menu, #addb, #chgpass, .pact')) $('sheet').hidden = true;
+  if (!e.target.closest('#sheet, .row, .av, .msg, #menu, #addb, #chgpass, .pact')) $('sheet').hidden = true;
   if (!e.target.closest('#cpick, #r-country')) $('cpick').hidden = true;
   if (!e.target.closest('#userlist, #menu, #more')) $('userlist').hidden = true;
 });
