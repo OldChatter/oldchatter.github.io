@@ -50,7 +50,8 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--cyan),var(--blue
 .stage{position:relative;display:flex;justify-content:center;min-height:560px}
 .phone{width:290px;height:560px;border-radius:42px;background:#05070b;border:2px solid #2a3750;padding:12px;box-shadow:0 40px 90px #000a,0 0 0 8px #ffffff06,0 0 80px #2b8cf033;transform:rotate(-3deg);animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:rotate(-3deg) translateY(-14px)}}
-.screen{height:100%;border-radius:32px;background:#0f1522;overflow:hidden;display:flex;flex-direction:column}
+.screen{height:100%;border-radius:32px;background:#fff;overflow:hidden}
+.demo{width:375px;height:755px;border:0;transform:scale(.7093);transform-origin:0 0;display:block;background:#fff}
 .ph{display:flex;align-items:center;gap:8px;padding:14px 14px 10px;background:#162036;font-size:13px}
 .ph .badge{background:#1F3FA8;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700}
 .ph b{flex:1}.ph .on{color:#2ee08a;font-size:11px}
@@ -153,13 +154,7 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 
     <div class="stage">
       
-      <div class="phone"><div class="screen">
-        <div class="ph"><span class="badge">Extra</span><b>Night Lounge</b><span class="on">&#9679; 24</span></div>
-        <div class="cam"><span>LIVE</span></div>
-        <div class="msgs" id="msgs"></div>
-        <div class="bar"><div>Message</div>
-          <span class="mic"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></span></div>
-      </div></div>
+      <div class="phone"><div class="screen"><iframe class="demo" src="demo.html" title="OldChatter chat room" loading="lazy" tabindex="-1"></iframe></div></div>
     </div>
   </div>
 </div>
@@ -232,29 +227,6 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 <footer>OldChatter</footer>
 
 <script>
-
-// the little chat in the phone: a made-up conversation that plays on a loop
-var script = [
-  ['sys', 'Maya joined'],
-  ['Maya', 'hey everyone', '#d7759c'],
-  ['Leo', 'welcome back Maya', '#5fd04a'],
-  ['me', 'hi! who has the mic?'],
-  ['Sam', 'you can take it, going quiet now', '#e0b82a'],
-  ['sys', 'Dana joined'],
-  ['Dana', 'this room never sleeps', '#b27cff'],
-  ['me', 'love it here']
-];
-var box = document.getElementById('msgs'), n = 0;
-function step() {
-  if (n >= script.length) { setTimeout(function () { box.innerHTML = ''; n = 0; step(); }, 2600); return; }
-  var s = script[n++], d = document.createElement('div');
-  if (s[0] === 'sys') { d.className = 'sys'; d.textContent = s[1]; }
-  else { d.className = 'm' + (s[0] === 'me' ? ' me' : ''); d.innerHTML = (s[0] === 'me' ? '' : '<u style="color:' + s[2] + '">' + s[0] + '</u>') + s[1]; }
-  box.appendChild(d);
-  while (box.children.length > 6) box.removeChild(box.firstChild);
-  setTimeout(step, 1500 + Math.random() * 700);
-}
-step();
 
 // reveal on scroll
 var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .15 });

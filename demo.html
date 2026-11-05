@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OldChatter demo room</title>
+<!-- A scripted copy of the web app's chat room (same stylesheet), used inside the phone on the home page. No server, no real people. -->
+<link rel="stylesheet" href="web/style.css">
+<style>
+html,body{overflow:hidden;pointer-events:none;user-select:none}
+.lines{scroll-behavior:smooth}
+.msg{animation:in .35s ease both}@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.tile.big{height:130px}
+.tile .cam{width:100%;height:100%;min-width:230px;background:linear-gradient(135deg,#27406b,#5b2f6b)}
+.tile .cam::before{content:"";position:absolute;left:50%;top:26px;width:44px;height:44px;margin-left:-22px;border-radius:50%;background:#ffffff40}
+.tile .cam::after{content:"";position:absolute;left:50%;top:78px;width:96px;height:80px;margin-left:-48px;border-radius:50% 50% 0 0;background:#ffffff2e}
+</style>
+</head>
+<body>
+<div class="screen" id="room">
+  <header class="rh">
+    <button class="ob" id="b-back"></button>
+    <span class="pill blue" id="p-star"><b id="usercount">5</b></span>
+    <b id="roomname" class="title" style="color:#1F3FA8">Night Lounge</b>
+    <button class="ob" id="b-vol"></button>
+    <button class="ob" id="b-more"></button>
+  </header>
+  <div id="strip" class="strip"></div>
+  <div id="cams" class="cams"><div class="tile big"><div class="cam"></div><i>maya_k</i></div></div>
+  <div id="lines" class="lines rows"></div>
+  <div id="speakers" class="speakers"></div>
+  <form class="send" onsubmit="return false">
+    <button type="button" class="ib" id="b-smile"></button>
+    <input id="roomtext" placeholder="Message" autocomplete="off" disabled>
+    <button type="button" class="ib" id="b-mic"></button>
+    <button type="button" class="ib" id="b-cam"></button>
+    <button type="button" class="sendb" id="b-send"></button>
+  </form>
+</div>
+<script>
+const PATHS = {
+  back: '<polyline points="15 18 9 12 15 6"/>',
+  star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  vol: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>',
+  more: '<circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/>',
+  mic: '<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>',
+  video: '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+  smile: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
+  send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
+  user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'
+};
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+function icon(n, fill) { const s = el('span', 'ic' + (fill ? ' fill' : '')); s.innerHTML = '<svg viewBox="0 0 24 24">' + PATHS[n] + '</svg>'; return s; }
+[['b-back', 'back'], ['b-vol', 'vol'], ['b-more', 'more'], ['b-smile', 'smile'], ['b-mic', 'mic'], ['b-cam', 'video'], ['b-send', 'send']].forEach(([id, n]) => document.getElementById(id).append(icon(n, n === 'send')));
+document.getElementById('p-star').prepend(icon('star', true));
+
+const PLAN = ['#1A1A1A', '#1F3FA8', '#2E7D1E', '#6A1FA8', '#D7759C', '#C29A00', '#C45A14'], NAMES = ['Free', 'Extra', 'Deluxe', 'VIP', 'VIP Plus', 'Gold', 'Majestic'];
+function pill(t, cls, ic, color) { const p = el('span', 'pill ' + cls); if (color) p.style.background = color; if (ic) p.append(icon(ic, ic === 'star')); p.append(t); return p; }
+
+// the dark strip under the title, like renderStrip() in the app
+const strip = document.getElementById('strip');
+strip.append(el('span', 'dimtxt', 'Room'), document.createTextNode('Owner: System'), pill('5 online', 'blue', 'user'), pill('General', 'dim'), pill('Extra', '', null, PLAN[1]));
+const spk = document.getElementById('speakers'), sp = el('span', 'spk'); sp.append(icon('mic'), 'sam_dj'); spk.append(sp);
+
+function avatar(name, size) {
+  const a = el('div', 'av'); a.style.width = a.style.height = size + 'px'; a.style.fontSize = Math.round(size * .45) + 'px'; a.textContent = name[0].toUpperCase(); return a;
+}
+const lines = document.getElementById('lines');
+function row(who, plan, lvl, time, text) {
+  const r = el('div', 'msg' + (plan > 0 ? ' plan' : '')); r.append(avatar(who, 44));
+  const body = el('div', 'body'), head = el('div', 'head'), w = el('span', 'who', who);
+  if (plan > 0) w.style.color = PLAN[plan];
+  head.append(w, pill(String(lvl), 'blue', 'star'));
+  if (plan > 0) head.append(pill(NAMES[plan], '', null, PLAN[plan]));
+  head.append(el('span', 'time', time));
+  body.append(head, el('div', 'text', text)); r.append(body); lines.append(r);
+  while (lines.children.length > 8) lines.removeChild(lines.firstChild);
+  lines.scrollTop = lines.scrollHeight;
+}
+function sys(t, color) { const d = el('div', 'sys', t); d.style.cssText = 'color:' + color + ';font-size:13px;font-style:normal'; lines.append(d); lines.scrollTop = lines.scrollHeight; }
+const script = [
+  () => sys('Dana has joined the room.', '#FFAA37'),
+  () => row('maya_k', 1, 12, '21:04', 'hey everyone, who is up for some music tonight?'),
+  () => row('leo_93', 0, 5, '21:04', 'welcome back Maya! try the new playlist'),
+  () => row('sam_dj', 0, 21, '21:05', 'mic is free if anyone wants to sing'),
+  () => row('dana_x', 3, 8, '21:05', 'this room never sleeps'),
+  () => row('you', 0, 3, '21:06', 'love it here, thanks everyone!'),
+  () => sys('leo_93 has left the room.', '#BB6B00')
+];
+let i = 0;
+function seed() { lines.textContent = ''; for (i = 0; i < 4; i++) script[i](); } // the room is never empty on load
+seed();
+(function step() {
+  if (i >= script.length) { setTimeout(() => { seed(); setTimeout(step, 1500); }, 3200); return; }
+  script[i++](); setTimeout(step, 1500);
+})();
+</script>
+</body>
+</html>
