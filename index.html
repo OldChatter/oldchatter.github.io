@@ -5,77 +5,262 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OldChatter</title>
 <meta name="description" content="OldChatter: voice and video chat rooms for Windows and Android.">
+<meta name="theme-color" content="#0b0f17">
 <link rel="icon" href="img/logo.png">
 <style>
-:root{--bg:#fff;--fg:#14181f;--mute:#5d6673;--card:#f2f5f9;--line:#dde3ea;--blue:#1e7fd6;--blue2:#176bb8}
-@media (prefers-color-scheme:dark){:root{--bg:#101318;--fg:#eef1f5;--mute:#9aa4b2;--card:#1a1f27;--line:#2a313b;--blue:#3b98ec;--blue2:#5aa9f0}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:0 20px}
-header{padding:56px 0 40px;text-align:center}
-header img{width:112px;height:112px;object-fit:contain}
-h1{margin:12px 0 6px;font-size:clamp(34px,6vw,52px);letter-spacing:-.02em}
-.lead{max-width:560px;margin:0 auto;color:var(--mute);font-size:19px}
-.dl{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:28px 0 8px}
-.btn{display:inline-flex;flex-direction:column;align-items:center;min-width:220px;padding:14px 22px;border-radius:12px;background:var(--blue);color:#fff;text-decoration:none;font-weight:700}
-.btn:hover{background:var(--blue2)}.btn small{font-weight:400;opacity:.85}
-.note{color:var(--mute);font-size:14px;text-align:center}
-section{padding:36px 0}
-h2{margin:0 0 18px;font-size:26px;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.card{padding:18px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
-.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--mute);font-size:15px}
-.smiles{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;margin-top:8px}
-.smiles img{height:44px;width:auto}
-ol{max-width:620px;margin:0 auto;padding-left:22px;color:var(--mute)}ol li{margin:8px 0}ol b{color:var(--fg)}
-footer{padding:30px 0 50px;text-align:center;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
-a{color:var(--blue)}
+:root{--bg:#0b0f17;--fg:#f1f5fb;--mute:#9aa7bb;--card:#131c2c;--line:#22304a;--blue:#2b8cf0;--cyan:#27d3e6;--pink:#ff5fa2}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+.glow{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.glow i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:drift 18s ease-in-out infinite alternate}
+.glow i:nth-child(1){width:520px;height:520px;background:#1b62d6;left:-120px;top:-100px}
+.glow i:nth-child(2){width:460px;height:460px;background:#13a8c4;right:-100px;top:180px;animation-delay:-6s}
+.glow i:nth-child(3){width:420px;height:420px;background:#8a2be2;left:35%;top:900px;opacity:.28;animation-delay:-11s}
+@keyframes drift{to{transform:translate(70px,50px) scale(1.15)}}
+
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:#0b0f17b0;border-bottom:1px solid #ffffff10}
+nav .wrap{display:flex;align-items:center;gap:12px;height:62px}
+nav b{font-size:19px;letter-spacing:-.01em}nav img{width:34px;height:34px;object-fit:contain}
+nav .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:14px;font-weight:700;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--blue),#1b62d6);box-shadow:0 8px 28px #2b8cf055,inset 0 1px 0 #ffffff40;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px #2b8cf080,inset 0 1px 0 #ffffff40}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,#ffffff40,transparent);transform:skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%,60%{left:-60%}100%{left:130%}}
+.btn.alt{background:linear-gradient(135deg,#1fb86a,#0e8f55);box-shadow:0 8px 28px #1fb86a44,inset 0 1px 0 #ffffff40}
+.btn.alt:hover{box-shadow:0 14px 36px #1fb86a70,inset 0 1px 0 #ffffff40}
+.btn small{display:block;font-weight:400;opacity:.85;font-size:12px;line-height:1.2}
+.btn svg{width:26px;height:26px;flex:none}
+.btn.sm{padding:9px 16px;font-size:14px;border-radius:11px}
+
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 0 40px}
+.pillt{display:inline-flex;gap:8px;align-items:center;padding:6px 14px;border-radius:99px;background:#ffffff0d;border:1px solid #ffffff1a;color:var(--mute);font-size:13px}
+.pillt i{width:8px;height:8px;border-radius:50%;background:#2ee08a;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #2ee08a99}70%,100%{box-shadow:0 0 0 9px #2ee08a00}}
+h1{margin:18px 0 14px;font-size:clamp(40px,6.4vw,74px);line-height:1.04;letter-spacing:-.035em}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--cyan),var(--blue) 45%,var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:grad 7s linear infinite}
+@keyframes grad{to{background-position:-200% 0}}
+.lead{max-width:520px;color:var(--mute);font-size:19px;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:14px}
+.hint{margin-top:14px;color:var(--mute);font-size:13px}
+
+.stage{position:relative;display:flex;justify-content:center;min-height:560px}
+.phone{width:290px;height:560px;border-radius:42px;background:#05070b;border:2px solid #2a3750;padding:12px;box-shadow:0 40px 90px #000a,0 0 0 8px #ffffff06,0 0 80px #2b8cf033;transform:rotate(-3deg);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:rotate(-3deg) translateY(-14px)}}
+.screen{height:100%;border-radius:32px;background:#0f1522;overflow:hidden;display:flex;flex-direction:column}
+.ph{display:flex;align-items:center;gap:8px;padding:14px 14px 10px;background:#162036;font-size:13px}
+.ph .badge{background:#1F3FA8;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700}
+.ph b{flex:1}.ph .on{color:#2ee08a;font-size:11px}
+.cam{height:92px;margin:10px 12px 0;border-radius:12px;background:linear-gradient(135deg,#1c2b4a,#2c1f4a);position:relative;overflow:hidden}
+.cam::before{content:"";position:absolute;left:50%;top:24px;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:#ffffff30}
+.cam::after{content:"";position:absolute;left:50%;top:62px;width:66px;height:60px;margin-left:-33px;border-radius:50% 50% 0 0;background:#ffffff22}
+.cam span{position:absolute;left:8px;top:8px;font-size:10px;background:#d33;border-radius:5px;padding:1px 6px;font-weight:700;z-index:1}
+.msgs{flex:1;padding:10px 12px;display:flex;flex-direction:column;gap:7px;overflow:hidden;justify-content:flex-end}
+.m{max-width:86%;padding:8px 11px;border-radius:14px;font-size:12.5px;line-height:1.35;background:#1a2540;animation:pop .45s cubic-bezier(.2,1.4,.4,1) both}
+.m.me{align-self:flex-end;background:linear-gradient(135deg,#2b8cf0,#1b62d6)}
+.m u{display:block;text-decoration:none;font-size:10.5px;font-weight:700;margin-bottom:1px}
+.m img{height:20px;vertical-align:middle;margin-left:2px}
+.sys{align-self:center;font-size:10.5px;color:var(--mute);animation:pop .4s both}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.92)}}
+.bar{display:flex;align-items:center;gap:8px;padding:10px 12px 14px;background:#162036}
+.bar div{flex:1;height:34px;border-radius:17px;background:#0f1522;color:var(--mute);font-size:12px;display:flex;align-items:center;padding:0 12px}
+.mic{width:34px;height:34px;border-radius:50%;background:#2b8cf0;display:grid;place-items:center;position:relative}
+.mic::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #2b8cf0;animation:ring 1.8s ease-out infinite}
+@keyframes ring{to{transform:scale(1.9);opacity:0}}
+.mic svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fl{position:absolute;width:56px;height:auto;filter:drop-shadow(0 8px 14px #0008);animation:bob 5s ease-in-out infinite}
+.f1{left:2%;top:60px}.f2{right:0;top:150px;animation-delay:-1.7s}.f3{left:6%;bottom:90px;animation-delay:-3s}.f4{right:4%;bottom:50px;animation-delay:-4s}
+@keyframes bob{50%{transform:translateY(-16px) rotate(6deg)}}
+
+.marq{overflow:hidden;border-block:1px solid #ffffff10;background:#ffffff05;padding:18px 0;margin:30px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.track{display:flex;gap:46px;width:max-content;animation:scroll 32s linear infinite}
+.track img{height:40px;width:auto}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+
+.shot{max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;border:1px solid #ffffff22;box-shadow:0 40px 90px #000a,0 0 70px #2b8cf033;transition:transform .4s}
+.shot:hover{transform:translateY(-6px) scale(1.01)}
+.shot img{display:block;width:100%;height:auto}
+section{padding:70px 0}
+.tag{color:var(--cyan);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-align:center}
+h2{margin:8px 0 12px;font-size:clamp(30px,4.4vw,46px);text-align:center;letter-spacing:-.025em;line-height:1.1}
+.sub{max-width:560px;margin:0 auto 44px;text-align:center;color:var(--mute);font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.card{position:relative;padding:26px;border-radius:20px;background:linear-gradient(160deg,#16213a,#0f1626);border:1px solid var(--line);transition:transform .25s,border-color .25s;overflow:hidden}
+.card:hover{transform:translateY(-6px);border-color:#2b8cf088}
+.card::before{content:"";position:absolute;width:160px;height:160px;right:-50px;top:-60px;border-radius:50%;background:var(--c,#2b8cf0);opacity:.18;filter:blur(30px);transition:opacity .3s}
+.card:hover::before{opacity:.4}
+.ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#ffffff10;margin-bottom:14px}
+.ic svg{width:24px;height:24px;fill:none;stroke:var(--c,#2b8cf0);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card h3{margin:0 0 6px;font-size:19px}.card p{margin:0;color:var(--mute);font-size:15px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;counter-reset:s}
+.step{padding:26px;border-radius:20px;border:1px dashed #2b8cf055;background:#ffffff04;counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));font-weight:800;margin-bottom:14px}
+.step h3{margin:0 0 6px}.step p{margin:0;color:var(--mute);font-size:15px}
+
+.plat{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.pl{flex:1 1 220px;max-width:300px;text-align:center;padding:26px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.pl svg{width:44px;height:44px;fill:none;stroke:var(--cyan);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pl h3{margin:10px 0 2px}.pl p{margin:0;color:var(--mute);font-size:14px}
+
+.final{text-align:center;padding:60px 28px;border-radius:30px;background:linear-gradient(135deg,#123a78,#0e6f8c 60%,#7a2a9c);position:relative;overflow:hidden}
+.final h2{margin-top:0}.final .cta{justify-content:center;margin-top:26px}
+.final p{margin:0 auto;max-width:520px;color:#dfeaff}
+.final img.fl2{position:absolute;opacity:.9;animation:bob 6s ease-in-out infinite}
+footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
+
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+.grid .rv:nth-child(2){transition-delay:.08s}.grid .rv:nth-child(3){transition-delay:.16s}.grid .rv:nth-child(4){transition-delay:.24s}.grid .rv:nth-child(5){transition-delay:.32s}.grid .rv:nth-child(6){transition-delay:.4s}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:40px;text-align:center}.lead{margin-inline:auto}.cta{justify-content:center}
+  .stage{min-height:600px}.final img.fl2{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
+<div class="glow"><i></i><i></i><i></i></div>
+
+<nav><div class="wrap">
+  <img src="img/logo.png" alt=""><b>OldChatter</b><span class="sp"></span>
+  <a class="btn sm" href="#get">Download</a>
+</div></nav>
+
 <div class="wrap">
-<header>
-  <img src="img/logo.png" alt="OldChatter logo">
-  <h1>OldChatter</h1>
-  <p class="lead">Voice and video chat rooms in the classic style. Join a room, talk on the mic, share your webcam, and keep your friends close.</p>
-  <div class="dl">
-    <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatterSetup.exe">Download for Windows<small>Windows 10 / 11</small></a>
-    <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">Download for Android<small>Android 6 or newer</small></a>
+  <div class="hero">
+    <div>
+      <span class="pillt"><i></i> Rooms are open right now</span>
+      <h1>Talk. Show. <em>Hang out.</em></h1>
+      <p class="lead">Voice and video chat rooms in the classic style. Take the mic, switch on your webcam, whisper to a friend, and fill the room with animated smileys.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatterSetup.exe">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>
+          <span>Download for Windows<small>Windows 10 / 11</small></span></a>
+        <a class="btn alt" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9h10v8a1 1 0 0 1-1 1h-1v3a1.2 1.2 0 0 1-2.4 0v-3h-1.2v3A1.2 1.2 0 0 1 9 21v-3H8a1 1 0 0 1-1-1zm-3 0a1.2 1.2 0 0 1 2.4 0v5A1.2 1.2 0 0 1 4 14zm14.6 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM7.2 8a4.8 4.8 0 0 1 9.6 0z"/></svg>
+          <span>Download for Android<small>Android 6 or newer</small></span></a>
+      </div>
+      <p class="hint">Free account. Always the latest version.</p>
+    </div>
+
+    <div class="stage">
+      <img class="fl f1" src="img/s2.webp" alt=""><img class="fl f2" src="img/s5.webp" alt=""><img class="fl f3" src="img/s8.webp" alt=""><img class="fl f4" src="img/s11.webp" alt="">
+      <div class="phone"><div class="screen">
+        <div class="ph"><span class="badge">Extra</span><b>Night Lounge</b><span class="on">&#9679; 24</span></div>
+        <div class="cam"><span>LIVE</span></div>
+        <div class="msgs" id="msgs"></div>
+        <div class="bar"><div>Message</div>
+          <span class="mic"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></span></div>
+      </div></div>
+    </div>
   </div>
-  <p class="note">Always the latest version.</p>
-</header>
+</div>
+
+<div class="marq" aria-hidden="true"><div class="track" id="track"></div></div>
+
+<div class="wrap">
+<section>
+  <div class="tag rv">On Windows</div>
+  <h2 class="rv">The room, on your desktop</h2>
+  <p class="sub rv">Chat, voice and webcam in one familiar window.</p>
+  <div class="shot rv"><img src="img/windows.png" alt="OldChatter room window on Windows: chat with animated smileys, member list, mic and webcam"></div>
+</section>
 
 <section>
-  <h2>What you get</h2>
+  <div class="tag rv">Features</div>
+  <h2 class="rv">Everything a chat room needs</h2>
+  <p class="sub rv">Simple to join, fun to stay in.</p>
   <div class="grid">
-    <div class="card"><h3>Public rooms</h3><p>Rooms sorted into categories. Pick one and start talking.</p></div>
-    <div class="card"><h3>Voice and webcam</h3><p>Take the mic when it is your turn, or share your camera with the room.</p></div>
-    <div class="card"><h3>Private messages</h3><p>Chat one on one, or whisper to someone inside a room.</p></div>
-    <div class="card"><h3>Contacts</h3><p>Add friends, see who is online, and set your own status.</p></div>
-    <div class="card"><h3>Your privacy</h3><p>Decide who can message, invite or whisper to you: everyone, or only your contacts.</p></div>
-    <div class="card"><h3>Telegram Mini App</h3><p>The same rooms and contacts, right inside Telegram.</p></div>
+    <div class="card rv" style="--c:#2b8cf0"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Public rooms</h3><p>Rooms sorted into categories. Pick one, step in, and start talking.</p></div>
+    <div class="card rv" style="--c:#27d3e6"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></div><h3>Live voice</h3><p>Take the mic when it is your turn and the whole room hears you.</p></div>
+    <div class="card rv" style="--c:#ff5fa2"><div class="ic"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3>Webcam</h3><p>Share your camera with the room, and watch others who share theirs.</p></div>
+    <div class="card rv" style="--c:#ffc83d"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><h3>Animated smileys</h3><p>A full pack of animated smileys to say what words can not.</p></div>
+    <div class="card rv" style="--c:#2ee08a"><div class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div><h3>Contacts and whispers</h3><p>Keep your friends in a list, see who is online, message or whisper to them.</p></div>
+    <div class="card rv" style="--c:#a56bff"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>You choose who reaches you</h3><p>Allow messages, invitations and whispers from everyone, or only from your contacts.</p></div>
   </div>
 </section>
 
 <section>
-  <h2>Animated smileys</h2>
-  <div class="smiles">
-    <img src="img/s0.webp" alt=""><img src="img/s1.webp" alt=""><img src="img/s2.webp" alt=""><img src="img/s3.webp" alt=""><img src="img/s4.webp" alt=""><img src="img/s5.webp" alt="">
-    <img src="img/s6.webp" alt=""><img src="img/s7.webp" alt=""><img src="img/s8.webp" alt=""><img src="img/s9.webp" alt=""><img src="img/s10.webp" alt=""><img src="img/s11.webp" alt="">
+  <div class="tag rv">How it works</div>
+  <h2 class="rv">In the room in a minute</h2>
+  <p class="sub rv">No setup, no fuss.</p>
+  <div class="steps">
+    <div class="step rv"><h3>Download</h3><p>Get the app for Windows or Android.</p></div>
+    <div class="step rv"><h3>Sign up free</h3><p>Create your account inside the app.</p></div>
+    <div class="step rv"><h3>Join a room</h3><p>Choose a category, pick a room, say hello.</p></div>
   </div>
 </section>
 
 <section>
-  <h2>Get started</h2>
-  <ol>
-    <li><b>Download</b> the app for your device above.</li>
-    <li><b>Windows:</b> run the installer. If SmartScreen warns about an unknown publisher (the installer is not code-signed), choose <i>More info</i>, then <i>Run anyway</i>.</li>
-    <li><b>Android:</b> open the APK and allow installs from this source when asked. If you have an older version signed with a different key, uninstall it first.</li>
-    <li><b>Create a free account</b> inside the app and pick a room.</li>
-  </ol>
-  <p class="note" style="margin-top:18px">One account can be signed in on one device at a time. Signing in somewhere else signs the first device out.</p>
+  <div class="tag rv">Everywhere you are</div>
+  <h2 class="rv">One account, three ways in</h2>
+  <p class="sub rv">Your rooms and contacts follow you.</p>
+  <div class="plat">
+    <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><h3>Windows</h3><p>Desktop app, Windows 10 and 11</p></div>
+    <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><h3>Android</h3><p>Phone app, Android 6 or newer</p></div>
+    <div class="pl rv"><svg viewBox="0 0 24 24"><path d="M22 3 2 11l6 2 2 7 3-4 5 4z"/></svg><h3>Telegram Mini App</h3><p>Inside Telegram, nothing to install</p></div>
+  </div>
+</section>
+
+<section id="get">
+  <div class="final rv">
+    <img class="fl2" src="img/s3.webp" alt="" style="left:6%;top:24px;height:54px"><img class="fl2" src="img/s6.webp" alt="" style="right:7%;top:30px;height:54px;animation-delay:-2s"><img class="fl2" src="img/s9.webp" alt="" style="left:12%;bottom:26px;height:50px;animation-delay:-4s"><img class="fl2" src="img/s1.webp" alt="" style="right:11%;bottom:30px;height:50px;animation-delay:-1s">
+    <h2>Your room is waiting</h2>
+    <p>Download OldChatter and say hello.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatterSetup.exe">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>
+        <span>Download for Windows<small>Windows 10 / 11</small></span></a>
+      <a class="btn alt" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9h10v8a1 1 0 0 1-1 1h-1v3a1.2 1.2 0 0 1-2.4 0v-3h-1.2v3A1.2 1.2 0 0 1 9 21v-3H8a1 1 0 0 1-1-1zm-3 0a1.2 1.2 0 0 1 2.4 0v5A1.2 1.2 0 0 1 4 14zm14.6 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM7.2 8a4.8 4.8 0 0 1 9.6 0z"/></svg>
+        <span>Download for Android<small>Android 6 or newer</small></span></a>
+    </div>
+    <p style="margin-top:18px;font-size:13px;color:#c5d6f2">Windows may show an unknown-publisher warning because the installer is not code-signed. Choose More info, then Run anyway.</p>
+  </div>
 </section>
 </div>
 <footer>OldChatter</footer>
+
+<script>
+// smiley marquee (the list is doubled so the loop is seamless)
+var tr = document.getElementById('track'), h = '';
+for (var k = 0; k < 2; k++) for (var i = 0; i < 12; i++) h += '<img src="img/s' + i + '.webp" alt="">';
+tr.innerHTML = h;
+
+// the little chat in the phone: a made-up conversation that plays on a loop
+var S = function (n) { return ' <img src="img/s' + n + '.webp" alt="">'; };
+var script = [
+  ['sys', 'Maya joined'],
+  ['Maya', 'hey everyone' + S(0), '#d7759c'],
+  ['Leo', 'welcome back Maya' + S(2), '#5fd04a'],
+  ['me', 'hi! who has the mic?'],
+  ['Sam', 'you can take it, going quiet now' + S(5), '#e0b82a'],
+  ['sys', 'Dana joined'],
+  ['Dana', 'this room never sleeps' + S(8), '#b27cff'],
+  ['me', 'love it here' + S(1)]
+];
+var box = document.getElementById('msgs'), n = 0;
+function step() {
+  if (n >= script.length) { setTimeout(function () { box.innerHTML = ''; n = 0; step(); }, 2600); return; }
+  var s = script[n++], d = document.createElement('div');
+  if (s[0] === 'sys') { d.className = 'sys'; d.textContent = s[1]; }
+  else { d.className = 'm' + (s[0] === 'me' ? ' me' : ''); d.innerHTML = (s[0] === 'me' ? '' : '<u style="color:' + s[2] + '">' + s[0] + '</u>') + s[1]; }
+  box.appendChild(d);
+  while (box.children.length > 6) box.removeChild(box.firstChild);
+  setTimeout(step, 1500 + Math.random() * 700);
+}
+step();
+
+// reveal on scroll
+var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .15 });
+document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+</script>
 </body>
 </html>
