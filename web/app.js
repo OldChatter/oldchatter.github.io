@@ -401,7 +401,7 @@ function chatRow(box, who, html, u, time) {
   if (plan > 0) head.append(pill(PLAN_NAMES[plan], '', null, planColor(plan)));
   if (u && u.admin > 0) head.append(el('span', 'adm', 'A'));
   head.append(el('span', 'time', clock(time)));
-  const qm = /^\s*<span data-q="([^"]*)"><b>([^<]*)<\/b><br>([^<]*)<\/span>/.exec(html || '');   // a reply: the quoted message comes first
+  const qm = /^\s*<span\b[^>]*\bdata-q="([^"]*)"[^>]*><b>([^<]*)<\/b><br>([^<]*)<\/span>/.exec(html || '');   // a reply: the quoted message comes first
   let q = null;
   if (qm) { html = html.slice(qm[0].length); q = quoteBox(plain(qm[2]), plain(qm[3]), qm[1]); }
   const text = el('div', 'text'); rich(text, html);
