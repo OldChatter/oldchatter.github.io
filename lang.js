@@ -1,4 +1,4 @@
-// Landing page translations. English is the source text; every other language fills the same keys.
+﻿// Landing page translations. English is the source text; every other language fills the same keys.
 // A key left out in a language falls back to English.
 var LANGS = [
   ['en', 'English'], ['fa', 'فارسی'], ['ar', 'العربية'], ['es', 'Español'], ['fr', 'Français'],
@@ -30,7 +30,8 @@ var T = {
     pl_win_p: 'Desktop app, Windows 10 and 11', pl_and_p: 'Phone app, Android 6 or newer', pl_web_t: 'Web app',
     pl_web_p: 'Any browser. Add it to your iPhone or Android home screen',
     fin_h2: 'Your room is waiting', fin_p: 'Download OldChatter and say hello.',
-    fin_note: 'Windows may show an unknown-publisher warning because the installer is not code-signed. Choose More info, then Run anyway.'
+    fin_note: 'Windows may show an unknown-publisher warning because the installer is not code-signed. Choose More info, then Run anyway.',
+    game_tag: 'Games', game_h2: 'Play together, right in the room', game_sub: 'Two multiplayer games, built into the Windows app.', g1t: 'Ludo', g1p: 'The classic race game for up to 4 players. Roll the dice and bring all your pieces home first.', g2t: 'Backgammon', g2p: 'Two players, one board. Roll, move, and bear off before your opponent does.', game_note: 'A room admin starts a game from the Games menu. Everyone in the room can join in or just watch.'
   },
   fa: {
     desc: 'اولدچتر: اتاق‌های گفتگوی صوتی و تصویری برای ویندوز و اندروید.',
@@ -55,7 +56,8 @@ var T = {
     pl_win_p: 'برنامه‌ی دسکتاپ، ویندوز ۱۰ و ۱۱', pl_and_p: 'برنامه‌ی موبایل، اندروید ۶ یا بالاتر', pl_web_t: 'نسخه‌ی وب',
     pl_web_p: 'هر مرورگری. به صفحه‌ی اصلی آیفون یا اندرویدت اضافه‌اش کن',
     fin_h2: 'اتاقت منتظرته', fin_p: 'اولدچتر رو دانلود کن و سلام کن.',
-    fin_note: 'ویندوز ممکنه هشدار «ناشر ناشناس» نشون بده، چون نصب‌کننده امضای دیجیتال نداره. روی «More info» و بعد «Run anyway» بزن.'
+    fin_note: 'ویندوز ممکنه هشدار «ناشر ناشناس» نشون بده، چون نصب‌کننده امضای دیجیتال نداره. روی «More info» و بعد «Run anyway» بزن.',
+    game_tag: 'بازی‌ها', game_h2: 'همین‌جا توی اتاق با هم بازی کنید', game_sub: 'دو بازی چندنفره، داخل برنامه‌ی ویندوز.', g1t: 'منچ', g1p: 'بازی کلاسیک مسابقه‌ای برای حداکثر ۴ نفر. تاس بریز و قبل از بقیه همه‌ی مهره‌هات رو به خونه برسون.', g2t: 'تخته‌نرد', g2p: 'دو بازیکن، یک تخته. تاس بریز، حرکت کن و قبل از حریف مهره‌هات رو از بازی خارج کن.', game_note: 'ادمین اتاق از منوی Games یه بازی رو شروع می‌کنه. همه‌ی اتاق می‌تونن وارد بازی بشن یا فقط تماشا کنن.'
   },
   ar: {
     desc: 'أولد تشاتر: غرف دردشة صوتية ومرئية لنظامي ويندوز وأندرويد.',
@@ -80,7 +82,8 @@ var T = {
     pl_win_p: 'تطبيق سطح المكتب، ويندوز 10 و11', pl_and_p: 'تطبيق الهاتف، أندرويد 6 أو أحدث', pl_web_t: 'تطبيق الويب',
     pl_web_p: 'أي متصفح. أضفه إلى الشاشة الرئيسية في آيفون أو أندرويد',
     fin_h2: 'غرفتك بانتظارك', fin_p: 'حمّل أولد تشاتر وقل مرحبًا.',
-    fin_note: 'قد يعرض ويندوز تحذير «ناشر غير معروف» لأن المثبّت غير موقّع رقميًا. اختر More info ثم Run anyway.'
+    fin_note: 'قد يعرض ويندوز تحذير «ناشر غير معروف» لأن المثبّت غير موقّع رقميًا. اختر More info ثم Run anyway.',
+    game_tag: 'ألعاب', game_h2: 'العبوا معًا داخل الغرفة', game_sub: 'لعبتان جماعيتان مدمجتان في تطبيق ويندوز.', g1t: 'لودو', g1p: 'لعبة السباق الكلاسيكية لما يصل إلى 4 لاعبين. ارمِ النرد وأوصل كل قطعك إلى البيت أولًا.', g2t: 'الطاولة (النرد)', g2p: 'لاعبان ولوحة واحدة. ارمِ النرد وحرّك وأخرج قطعك قبل خصمك.', game_note: 'يبدأ مشرف الغرفة لعبة من قائمة Games. يمكن لأي شخص في الغرفة الانضمام أو المشاهدة فقط.'
   },
   es: {
     desc: 'OldChatter: salas de chat de voz y vídeo para Windows y Android.',
@@ -105,7 +108,8 @@ var T = {
     pl_win_p: 'App de escritorio, Windows 10 y 11', pl_and_p: 'App para el móvil, Android 6 o superior', pl_web_t: 'App web',
     pl_web_p: 'Cualquier navegador. Añádela a la pantalla de inicio de tu iPhone o Android',
     fin_h2: 'Tu sala te espera', fin_p: 'Descarga OldChatter y saluda.',
-    fin_note: 'Windows puede mostrar un aviso de editor desconocido porque el instalador no está firmado. Elige Más información y luego Ejecutar de todas formas.'
+    fin_note: 'Windows puede mostrar un aviso de editor desconocido porque el instalador no está firmado. Elige Más información y luego Ejecutar de todas formas.',
+    game_tag: 'Juegos', game_h2: 'Jugad juntos, ahí mismo en la sala', game_sub: 'Dos juegos multijugador integrados en la app de Windows.', g1t: 'Parchís (Ludo)', g1p: 'El clásico juego de carreras para hasta 4 jugadores. Tira el dado y lleva todas tus fichas a casa primero.', g2t: 'Backgammon', g2p: 'Dos jugadores, un tablero. Tira, mueve y saca tus fichas antes que tu rival.', game_note: 'Un admin de la sala inicia una partida desde el menú Games. Todos en la sala pueden unirse o solo mirar.'
   },
   fr: {
     desc: 'OldChatter : salons de discussion vocaux et vidéo pour Windows et Android.',
@@ -130,7 +134,8 @@ var T = {
     pl_win_p: 'Application de bureau, Windows 10 et 11', pl_and_p: 'Application mobile, Android 6 ou plus récent', pl_web_t: 'Application web',
     pl_web_p: 'N’importe quel navigateur. Ajoutez-la à l’écran d’accueil de votre iPhone ou Android',
     fin_h2: 'Votre salon vous attend', fin_p: 'Téléchargez OldChatter et dites bonjour.',
-    fin_note: 'Windows peut afficher un avertissement « éditeur inconnu » car le programme d’installation n’est pas signé. Choisissez Informations complémentaires, puis Exécuter quand même.'
+    fin_note: 'Windows peut afficher un avertissement « éditeur inconnu » car le programme d’installation n’est pas signé. Choisissez Informations complémentaires, puis Exécuter quand même.',
+    game_tag: 'Jeux', game_h2: 'Jouez ensemble, directement dans le salon', game_sub: 'Deux jeux multijoueurs intégrés à l’application Windows.', g1t: 'Ludo', g1p: 'Le jeu de course classique pour jusqu’à 4 joueurs. Lancez le dé et ramenez tous vos pions à la maison en premier.', g2t: 'Backgammon', g2p: 'Deux joueurs, un plateau. Lancez, déplacez et sortez vos pions avant votre adversaire.', game_note: 'Un admin du salon lance une partie depuis le menu Games. Tout le monde dans le salon peut participer ou simplement regarder.'
   },
   de: {
     desc: 'OldChatter: Sprach- und Video-Chaträume für Windows und Android.',
@@ -155,7 +160,8 @@ var T = {
     pl_win_p: 'Desktop-App, Windows 10 und 11', pl_and_p: 'Handy-App, Android 6 oder neuer', pl_web_t: 'Web-App',
     pl_web_p: 'Jeder Browser. Füge sie dem Startbildschirm deines iPhones oder Androids hinzu',
     fin_h2: 'Dein Raum wartet', fin_p: 'Lade OldChatter herunter und sag Hallo.',
-    fin_note: 'Windows zeigt eventuell eine Warnung vor einem unbekannten Herausgeber, weil das Installationsprogramm nicht signiert ist. Wähle „Weitere Informationen“ und dann „Trotzdem ausführen“.'
+    fin_note: 'Windows zeigt eventuell eine Warnung vor einem unbekannten Herausgeber, weil das Installationsprogramm nicht signiert ist. Wähle „Weitere Informationen“ und dann „Trotzdem ausführen“.',
+    game_tag: 'Spiele', game_h2: 'Spielt zusammen, direkt im Raum', game_sub: 'Zwei Multiplayer-Spiele, direkt in der Windows-App.', g1t: 'Ludo', g1p: 'Das klassische Rennspiel für bis zu 4 Spieler. Würfle und bring als Erster alle Figuren ins Ziel.', g2t: 'Backgammon', g2p: 'Zwei Spieler, ein Brett. Würfeln, ziehen und vor dem Gegner alle Steine auswürfeln.', game_note: 'Ein Raum-Admin startet ein Spiel im Menü Games. Alle im Raum können mitspielen oder nur zusehen.'
   },
   tr: {
     desc: 'OldChatter: Windows ve Android için sesli ve görüntülü sohbet odaları.',
@@ -180,7 +186,8 @@ var T = {
     pl_win_p: 'Masaüstü uygulaması, Windows 10 ve 11', pl_and_p: 'Telefon uygulaması, Android 6 veya daha yeni', pl_web_t: 'Web uygulaması',
     pl_web_p: 'Her tarayıcı. iPhone veya Android ana ekranına ekle',
     fin_h2: 'Odan seni bekliyor', fin_p: 'OldChatter’ı indir ve merhaba de.',
-    fin_note: 'Yükleyici imzalı olmadığı için Windows “bilinmeyen yayıncı” uyarısı gösterebilir. Daha fazla bilgi’yi, sonra Yine de çalıştır’ı seç.'
+    fin_note: 'Yükleyici imzalı olmadığı için Windows “bilinmeyen yayıncı” uyarısı gösterebilir. Daha fazla bilgi’yi, sonra Yine de çalıştır’ı seç.',
+    game_tag: 'Oyunlar', game_h2: 'Odanın içinde birlikte oynayın', game_sub: 'Windows uygulamasına yerleşik iki çok oyunculu oyun.', g1t: 'Ludo', g1p: '4 oyuncuya kadar klasik yarış oyunu. Zarı at ve tüm taşlarını ilk sen eve götür.', g2t: 'Tavla', g2p: 'İki oyuncu, tek tahta. Zar at, taşları oyna ve rakibinden önce hepsini topla.', game_note: 'Oda yöneticisi Games menüsünden bir oyun başlatır. Odadaki herkes katılabilir ya da sadece izleyebilir.'
   },
   ru: {
     desc: 'OldChatter: голосовые и видеочаты для Windows и Android.',
@@ -205,7 +212,8 @@ var T = {
     pl_win_p: 'Приложение для компьютера, Windows 10 и 11', pl_and_p: 'Приложение для телефона, Android 6 или новее', pl_web_t: 'Веб-приложение',
     pl_web_p: 'Любой браузер. Добавь его на главный экран iPhone или Android',
     fin_h2: 'Твоя комната ждёт', fin_p: 'Скачай OldChatter и поздоровайся.',
-    fin_note: 'Windows может показать предупреждение о неизвестном издателе, потому что установщик не подписан. Выбери «Подробнее», затем «Выполнить в любом случае».'
+    fin_note: 'Windows может показать предупреждение о неизвестном издателе, потому что установщик не подписан. Выбери «Подробнее», затем «Выполнить в любом случае».',
+    game_tag: 'Игры', game_h2: 'Играйте вместе прямо в комнате', game_sub: 'Две многопользовательские игры, встроенные в приложение для Windows.', g1t: 'Лудо', g1p: 'Классическая гонка до 4 игроков. Бросай кубик и первым приведи все фишки домой.', g2t: 'Нарды', g2p: 'Два игрока, одна доска. Бросай кости, двигай фишки и выведи их раньше соперника.', game_note: 'Админ комнаты запускает игру из меню Games. Все в комнате могут присоединиться или просто смотреть.'
   },
   pt: {
     desc: 'OldChatter: salas de bate-papo por voz e vídeo para Windows e Android.',
@@ -230,7 +238,8 @@ var T = {
     pl_win_p: 'App para computador, Windows 10 e 11', pl_and_p: 'App para celular, Android 6 ou superior', pl_web_t: 'App web',
     pl_web_p: 'Qualquer navegador. Adicione à tela inicial do iPhone ou Android',
     fin_h2: 'Sua sala está esperando', fin_p: 'Baixe o OldChatter e diga olá.',
-    fin_note: 'O Windows pode mostrar um aviso de editor desconhecido porque o instalador não é assinado. Escolha Mais informações e depois Executar assim mesmo.'
+    fin_note: 'O Windows pode mostrar um aviso de editor desconhecido porque o instalador não é assinado. Escolha Mais informações e depois Executar assim mesmo.',
+    game_tag: 'Jogos', game_h2: 'Joguem juntos, ali mesmo na sala', game_sub: 'Dois jogos multijogador integrados ao app para Windows.', g1t: 'Ludo', g1p: 'O clássico jogo de corrida para até 4 jogadores. Jogue o dado e leve todas as suas peças para casa primeiro.', g2t: 'Gamão', g2p: 'Dois jogadores, um tabuleiro. Jogue, mova e retire suas peças antes do adversário.', game_note: 'Um admin da sala inicia um jogo pelo menu Games. Todos na sala podem entrar ou só assistir.'
   },
   hi: {
     desc: 'OldChatter: Windows और Android के लिए वॉइस और वीडियो चैट रूम।',
@@ -255,7 +264,8 @@ var T = {
     pl_win_p: 'डेस्कटॉप ऐप, Windows 10 और 11', pl_and_p: 'फ़ोन ऐप, Android 6 या नया', pl_web_t: 'वेब ऐप',
     pl_web_p: 'कोई भी ब्राउज़र। इसे अपने iPhone या Android की होम स्क्रीन पर जोड़ें',
     fin_h2: 'आपका रूम इंतज़ार कर रहा है', fin_p: 'OldChatter डाउनलोड करें और नमस्ते कहें।',
-    fin_note: 'इंस्टॉलर पर कोड-साइन न होने के कारण Windows “अज्ञात प्रकाशक” की चेतावनी दिखा सकता है। More info चुनें, फिर Run anyway।'
+    fin_note: 'इंस्टॉलर पर कोड-साइन न होने के कारण Windows “अज्ञात प्रकाशक” की चेतावनी दिखा सकता है। More info चुनें, फिर Run anyway।',
+    game_tag: 'खेल', game_h2: 'कमरे में ही साथ मिलकर खेलें', game_sub: 'Windows ऐप में जुड़े दो मल्टीप्लेयर खेल।', g1t: 'लूडो', g1p: '4 खिलाड़ियों तक के लिए क्लासिक रेस वाला खेल। पासा फेंकें और सबसे पहले अपनी सारी गोटियाँ घर पहुँचाएँ।', g2t: 'बैकगैमन', g2p: 'दो खिलाड़ी, एक बोर्ड। पासा फेंकें, चलें और विरोधी से पहले अपनी गोटियाँ बाहर निकालें।', game_note: 'कमरे का व्यवस्थापक Games मेन्यू से खेल शुरू करता है। कमरे में हर कोई शामिल हो सकता है या बस देख सकता है।'
   },
   ur: {
     desc: 'OldChatter: Windows اور Android کے لیے وائس اور ویڈیو چیٹ رومز۔',
@@ -280,7 +290,8 @@ var T = {
     pl_win_p: 'ڈیسک ٹاپ ایپ، Windows 10 اور 11', pl_and_p: 'فون ایپ، Android 6 یا نیا', pl_web_t: 'ویب ایپ',
     pl_web_p: 'کوئی بھی براؤزر۔ اسے اپنے iPhone یا Android کی ہوم اسکرین پر شامل کریں',
     fin_h2: 'آپ کا روم انتظار کر رہا ہے', fin_p: 'OldChatter ڈاؤن لوڈ کریں اور سلام کہیں۔',
-    fin_note: 'انسٹالر پر کوڈ سائن نہ ہونے کی وجہ سے Windows “نامعلوم پبلشر” کی وارننگ دکھا سکتا ہے۔ More info چنیں، پھر Run anyway۔'
+    fin_note: 'انسٹالر پر کوڈ سائن نہ ہونے کی وجہ سے Windows “نامعلوم پبلشر” کی وارننگ دکھا سکتا ہے۔ More info چنیں، پھر Run anyway۔',
+    game_tag: 'کھیل', game_h2: 'کمرے میں ہی مل کر کھیلیں', game_sub: 'Windows ایپ میں شامل دو ملٹی پلیئر کھیل۔', g1t: 'لوڈو', g1p: '4 کھلاڑیوں تک کے لیے کلاسک ریس والا کھیل۔ پانسہ پھینکیں اور سب سے پہلے اپنی ساری گوٹیں گھر پہنچائیں۔', g2t: 'بیک گیمن', g2p: 'دو کھلاڑی، ایک بورڈ۔ پانسہ پھینکیں، چلیں اور مخالف سے پہلے اپنی گوٹیں باہر نکالیں۔', game_note: 'کمرے کا منتظم Games مینو سے کھیل شروع کرتا ہے۔ کمرے میں ہر کوئی شامل ہو سکتا ہے یا بس دیکھ سکتا ہے۔'
   },
   zh: {
     desc: 'OldChatter:适用于 Windows 和 Android 的语音和视频聊天室。',
@@ -305,6 +316,7 @@ var T = {
     pl_win_p: '桌面应用，Windows 10 和 11', pl_and_p: '手机应用，Android 6 或更高版本', pl_web_t: '网页版',
     pl_web_p: '任何浏览器。可添加到 iPhone 或 Android 主屏幕',
     fin_h2: '你的聊天室在等你', fin_p: '下载 OldChatter,打个招呼吧。',
-    fin_note: '由于安装程序没有代码签名，Windows 可能显示“未知发布者”警告。请选择“更多信息”,然后点“仍要运行”。'
+    fin_note: '由于安装程序没有代码签名，Windows 可能显示“未知发布者”警告。请选择“更多信息”,然后点“仍要运行”。',
+    game_tag: '游戏', game_h2: '就在聊天室里一起玩', game_sub: '两款多人游戏，内置于 Windows 应用。', g1t: '飞行棋 (Ludo)', g1p: '最多 4 人的经典竞速游戏。掷骰子，率先让所有棋子回到终点。', g2t: '双陆棋', g2p: '两位玩家，一张棋盘。掷骰、移动，抢在对手之前把棋子全部移出。', game_note: '聊天室管理员可在 Games 菜单中开始游戏。聊天室里的每个人都可以加入或只是观战。'
   }
 };
