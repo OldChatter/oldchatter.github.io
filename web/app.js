@@ -59,6 +59,7 @@ const st = { me: '', buddies: [], cats: [], rooms: [], cat: 0, sub: 0, room: nul
 let ws, ping, retry, wantOnline = false, dev = '', tries = 0, lastRx = 0;
 
 const planColor = (p) => PLAN[Math.min(Math.max(p || 0, 0), 6)];
+const nameColor = (p) => ((p || 0) > 0 ? planColor(p) : 'var(--fg)');   // a Free user's name is the normal text colour: it was near-black, invisible in dark mode
 const show = (id) => {
   const desk = document.body.classList.contains('desk') && id !== 'login' && id !== 'reg';   // wide screens keep the room/contact list on the left
   ['login', 'reg', 'main', 'room', 'pm', 'settings', 'profile', 'game'].forEach((s) => { $(s).hidden = s !== id && !(desk && s === 'main'); });
@@ -286,7 +287,7 @@ function renderContacts() {
     const row = el('div', 'row');
     const pic = avatar(b.name, 44, b.status > 0 ? b.status : 0); pic.onclick = (e) => { e.stopPropagation(); openProfile(b.name); }; row.append(pic);
     const col = el('div'); col.style.flex = 1; col.style.minWidth = 0;
-    const n = el('b', '', b.name); n.style.color = planColor(b.plan); col.append(n);
+    const n = el('b', '', b.name); n.style.color = nameColor(b.plan); col.append(n);
     if (b.statusText) col.append(el('div', 'sub', b.statusText));
     row.append(col);
     if (st.unread.has(b.name)) { const d = el('span'); d.style.cssText = 'width:10px;height:10px;border-radius:50%;background:var(--blue)'; row.append(d); }
@@ -518,7 +519,7 @@ function joinRoom(r, code) {
   if (r.locked && !lock) { lock = prompt('This room is locked. Enter the code:') || ''; if (!lock) return; }
   audio(); // a tap is needed before the browser lets us play sound
   st.room = { id: r.id, name: r.name, lock }; st.users = {}; st.detail = null;
-  const n = $('roomname'); n.textContent = r.name; n.style.color = r.cat === HELP_CAT ? HELP : planColor(r.plan);
+  const n = $('roomname'); n.textContent = r.name; n.style.color = r.cat === HELP_CAT ? HELP : nameColor(r.plan);
   $('lines').textContent = ''; $('userlist').hidden = true; renderStrip();
   show('room'); mediaUI(); send({ t: 'joinroom', room: r.id, lockCode: lock });
 }
@@ -560,7 +561,7 @@ function renderUsers() {
   for (const n of names) {
     const u = st.users[n], row = el('div', 'row');
     row.append(avatar(n, 38, u.status || 1));
-    const w = el('b', '', n + (u.tag ? ' ' + u.tag : '')); w.style.color = u.tag ? HELP : planColor(u.plan); w.style.flex = 1; w.style.minWidth = 0;
+    const w = el('b', '', n + (u.tag ? ' ' + u.tag : '')); w.style.color = u.tag ? HELP : nameColor(u.plan); w.style.flex = 1; w.style.minWidth = 0;
     row.append(w);
     const marks = el('span', 'mark');
     if (u.admin > 0) { const s = icon('shield'); s.style.color = '#888'; marks.append(s); }
