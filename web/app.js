@@ -61,7 +61,7 @@ let ws, ping, retry, wantOnline = false, dev = '', tries = 0, lastRx = 0;
 const planColor = (p) => PLAN[Math.min(Math.max(p || 0, 0), 6)];
 const show = (id) => {
   const desk = document.body.classList.contains('desk') && id !== 'login' && id !== 'reg';   // wide screens keep the room/contact list on the left
-  ['login', 'reg', 'main', 'room', 'pm', 'settings', 'profile'].forEach((s) => { $(s).hidden = s !== id && !(desk && s === 'main'); });
+  ['login', 'reg', 'main', 'room', 'pm', 'settings', 'profile', 'game'].forEach((s) => { $(s).hidden = s !== id && !(desk && s === 'main'); });
   $('smilebox').hidden = true; $('menu').hidden = true; $('sheet').hidden = true;
   if (tg && tg.BackButton) (id === 'reg' || id === 'room' || id === 'pm' || id === 'settings' || id === 'profile' ? tg.BackButton.show() : tg.BackButton.hide());
 };
@@ -232,6 +232,8 @@ function handle(m) {
       if (m.welcome) sysLine($('lines'), m.welcome);
       break;
     case 'gmsg': if (st.room) chatRow($('lines'), m.from, m.text, st.users[m.from] || { tag: m.tag }, m.time); break;
+    case 'gamestate': onGameState(m); break;   // Ludo / Backgammon, see games.js
+    case 'gamenote': if (st.room && m.room === st.room.id) sysLine($('lines'), m.text); break;
     case 'roomuser':
       if (m.dir === 1) {
         if (st.room && st.users[m.name] && m.name !== st.me) joinLeaveLine(`${m.name} has left the room.`, LEFT_COLOR);
@@ -649,6 +651,7 @@ function roomMenu() {
   const add = (ic, label, fn) => { const b = el('button'); b.append(icon(ic), label); b.onclick = () => { m.hidden = true; fn(); }; m.append(b); };
   add('users', 'Members', () => { $('userlist').hidden = !$('userlist').hidden; });
   add('pause', frozen ? 'Unfreeze chat' : 'Freeze chat', () => setFrozen(!frozen));
+  add('dice', 'Games', openGames);
   add('info', 'Room info', roomInfo);
   add('hand', media.hand ? 'Lower hand' : 'Raise hand', () => send({ t: 'hand', room: st.room.id, value: media.hand ? 0 : 1 }));
   add('adduser', 'Invite a contact', inviteSheet);
