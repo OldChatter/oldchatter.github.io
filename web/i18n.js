@@ -240,7 +240,24 @@
     ['You are watching.', 'داری تماشا می‌کنی.', 'أنت تشاهد.', 'Estás mirando.', 'Vous regardez.', 'Du schaust zu.', 'İzliyorsun.', 'Вы наблюдаете.', 'Você está assistindo.', '你正在观战。', 'आप देख रहे हैं।', 'آپ دیکھ رہے ہیں۔'],
     ['You play White: from point 24 down to 1.', 'تو سفید بازی می‌کنی: از خونه‌ی ۲۴ به سمت ۱.', 'تلعب بالأبيض: من النقطة 24 نزولًا إلى 1.', 'Juegas con Blancas: del punto 24 al 1.', 'Vous jouez Blanc : du point 24 vers le 1.', 'Du spielst Weiß: von Punkt 24 hinab zu 1.', 'Beyaz oynuyorsun: 24. noktadan 1’e doğru.', 'Вы играете белыми: от пункта 24 к 1.', 'Você joga de Branco: do ponto 24 ao 1.', '你执白：从 24 点走向 1 点。', 'आप सफ़ेद खेलते हैं: 24 से 1 की ओर।', 'آپ سفید سے کھیلتے ہیں: 24 سے 1 کی طرف۔'],
     ['You play Black: from point 1 up to 24.', 'تو سیاه بازی می‌کنی: از خونه‌ی ۱ به سمت ۲۴.', 'تلعب بالأسود: من النقطة 1 صعودًا إلى 24.', 'Juegas con Negras: del punto 1 al 24.', 'Vous jouez Noir : du point 1 vers le 24.', 'Du spielst Schwarz: von Punkt 1 hinauf zu 24.', 'Siyah oynuyorsun: 1. noktadan 24’e doğru.', 'Вы играете чёрными: от пункта 1 к 24.', 'Você joga de Preto: do ponto 1 ao 24.', '你执黑：从 1 点走向 24 点。', 'आप काले से खेलते हैं: 1 से 24 की ओर।', 'آپ سیاہ سے کھیلتے ہیں: 1 سے 24 کی طرف۔'],
-    ['{1} wins!', '{1} برد!', 'فاز {1}!', '¡{1} gana!', '{1} gagne !', '{1} gewinnt!', '{1} kazandı!', 'Побеждает {1}!', '{1} venceu!', '{1} 获胜！', '{1} जीते!', '{1} جیت گیا!']
+    ['{1} wins!', '{1} برد!', 'فاز {1}!', '¡{1} gana!', '{1} gagne !', '{1} gewinnt!', '{1} kazandı!', 'Побеждает {1}!', '{1} venceu!', '{1} 获胜！', '{1} जीते!', '{1} جیت گیا!'],
+    ['Choose your skin tone', 'رنگ پوستت رو انتخاب کن', 'اختر لون بشرتك', 'Elige tu tono de piel', 'Choisissez votre teinte de peau', 'Wähle deinen Hautton', 'Ten rengini seç', 'Выберите оттенок кожи', 'Escolha seu tom de pele', '选择你的肤色', 'अपनी त्वचा का रंग चुनें', 'اپنی جلد کا رنگ چنیں'],
+    ['Skin tone', 'رنگ پوست', 'لون البشرة', 'Tono de piel', 'Teinte de peau', 'Hautton', 'Ten rengi', 'Оттенок кожи', 'Tom de pele', '肤色', 'त्वचा का रंग', 'جلد کا رنگ'],
+    ['Search emoji', 'جستجوی ایموجی', 'ابحث عن رمز تعبيري', 'Buscar emoji', 'Rechercher un emoji', 'Emoji suchen', 'Emoji ara', 'Поиск эмодзи', 'Buscar emoji', '搜索表情', 'इमोजी खोजें', 'ایموجی تلاش کریں'],
+    ['Recent', 'اخیر', 'الأخيرة', 'Recientes', 'Récents', 'Zuletzt', 'Son kullanılanlar', 'Недавние', 'Recentes', '最近使用', 'हाल के', 'حالیہ'],
+    ['No emoji found', 'ایموجی‌ای پیدا نشد', 'لم يُعثر على رموز', 'No se encontró ningún emoji', 'Aucun emoji trouvé', 'Kein Emoji gefunden', 'Emoji bulunamadı', 'Эмодзи не найдены', 'Nenhum emoji encontrado', '没有找到表情', 'कोई इमोजी नहीं मिला', 'کوئی ایموجی نہیں ملا'],
+    ['Nothing here yet', 'هنوز چیزی اینجا نیست', 'لا شيء هنا بعد', 'Aún no hay nada', 'Rien pour l’instant', 'Noch nichts hier', 'Henüz bir şey yok', 'Пока ничего нет', 'Nada aqui ainda', '这里还没有内容', 'यहाँ अभी कुछ नहीं', 'یہاں ابھی کچھ نہیں'],
+    ['Faces', 'صورتک‌ها', 'الوجوه', 'Caras', 'Visages', 'Gesichter', 'Yüzler', 'Лица', 'Rostos', '表情', 'चेहरे', 'چہرے'],
+    ['Hearts and feelings', 'قلب‌ها و احساسات', 'القلوب والمشاعر', 'Corazones y sentimientos', 'Cœurs et émotions', 'Herzen und Gefühle', 'Kalpler ve duygular', 'Сердца и чувства', 'Corações e sentimentos', '爱心与情感', 'दिल और भावनाएँ', 'دل اور جذبات'],
+    ['Hands and gestures', 'دست‌ها و ژست‌ها', 'الأيدي والإيماءات', 'Manos y gestos', 'Mains et gestes', 'Hände und Gesten', 'Eller ve jestler', 'Руки и жесты', 'Mãos e gestos', '手势', 'हाथ और इशारे', 'ہاتھ اور اشارے'],
+    ['People', 'آدم‌ها', 'الأشخاص', 'Personas', 'Personnes', 'Personen', 'İnsanlar', 'Люди', 'Pessoas', '人物', 'लोग', 'لوگ'],
+    ['Animals and nature', 'حیوانات و طبیعت', 'الحيوانات والطبيعة', 'Animales y naturaleza', 'Animaux et nature', 'Tiere und Natur', 'Hayvanlar ve doğa', 'Животные и природа', 'Animais e natureza', '动物与自然', 'जानवर और प्रकृति', 'جانور اور فطرت'],
+    ['Food and drink', 'غذا و نوشیدنی', 'الطعام والشراب', 'Comida y bebida', 'Nourriture et boissons', 'Essen und Trinken', 'Yiyecek ve içecek', 'Еда и напитки', 'Comida e bebida', '食物与饮料', 'खाना और पेय', 'کھانا اور مشروب'],
+    ['Activities', 'فعالیت‌ها', 'الأنشطة', 'Actividades', 'Activités', 'Aktivitäten', 'Etkinlikler', 'Занятия', 'Atividades', '活动', 'गतिविधियाँ', 'سرگرمیاں'],
+    ['Travel and places', 'سفر و مکان‌ها', 'السفر والأماكن', 'Viajes y lugares', 'Voyages et lieux', 'Reisen und Orte', 'Seyahat ve yerler', 'Путешествия и места', 'Viagens e lugares', '旅行与地点', 'यात्रा और स्थान', 'سفر اور مقامات'],
+    ['Objects', 'اشیا', 'الأشياء', 'Objetos', 'Objets', 'Objekte', 'Nesneler', 'Предметы', 'Objetos', '物品', 'वस्तुएँ', 'اشیاء'],
+    ['Symbols', 'نمادها', 'الرموز', 'Símbolos', 'Symboles', 'Symbole', 'Semboller', 'Символы', 'Símbolos', '符号', 'प्रतीक', 'علامات'],
+    ['Flags', 'پرچم‌ها', 'الأعلام', 'Banderas', 'Drapeaux', 'Flaggen', 'Bayraklar', 'Флаги', 'Bandeiras', '旗帜', 'झंडे', 'جھنڈے']
   ];
 
   // ---- the engine

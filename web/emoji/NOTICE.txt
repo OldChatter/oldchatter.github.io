@@ -1,0 +1,4 @@
+﻿Animated emoji: Noto Emoji Animation by Google (https://googlefonts.github.io/noto-emoji-animation/),
+licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+The pictures were shrunk (80 px, fewer frames) and re-saved as animated WebP; nothing else was changed.
+The emoji names used for search come from the Unicode Consortium's emoji-test.txt data (Unicode License).

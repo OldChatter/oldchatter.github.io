@@ -34,3 +34,7 @@ There is also a Telegram Mini App with the same rooms and contacts.
 ## Accounts
 
 Create a free account inside the app. One account can be signed in on one device at a time: signing in somewhere else signs the first device out.
+
+## Credits
+
+Animated emoji: [Noto Emoji Animation](https://googlefonts.github.io/noto-emoji-animation/) by Google, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The pictures were shrunk and re-saved as animated WebP. Emoji names used for search come from the Unicode Consortium's emoji-test.txt data.

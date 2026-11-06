@@ -1,6 +1,6 @@
 ﻿// OldChatter web app: keeps the app files so it opens fast and starts offline (chat itself needs the network).
 const V = 'oc-web-1';
-const CORE = ['./', 'index.html', 'style.css', 'app.js', 'i18n.js', 'games.js', 'config.js', 'countries.js', 'pwa.js', 'logo.png', 'manifest.webmanifest', 'icons/icon-192.png'];
+const CORE = ['./', 'index.html', 'style.css', 'app.js', 'i18n.js', 'emoji.js', 'games.js', 'config.js', 'countries.js', 'pwa.js', 'logo.png', 'manifest.webmanifest', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => {

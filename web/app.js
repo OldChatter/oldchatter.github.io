@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 const tg = window.Telegram && Telegram.WebApp;
 const mobile = !!tg && ['android', 'ios'].includes(tg.platform);
 
@@ -321,30 +321,72 @@ function toWire(t) {
 function rich(node, html) {
   html = html || '';
   const only = !plain(html).trim() && html.includes('data-s=');
+  const soloE = EMO.solo(plain(html));   // one emoji and nothing else: three times bigger
+  const add = (text) => EMO.nodes(text).forEach((n) => { if (soloE && n.nodeName === 'IMG') n.classList.add('big'); node.append(n); });   // Unicode emoji become the animated pictures
   const re = /<img[^>]*data-s="(\d+)"[^>]*>/g;
   let pos = 0, m;
   while ((m = re.exec(html))) {
-    if (m.index > pos) node.append(document.createTextNode(plain(html.slice(pos, m.index))));
+    if (m.index > pos) add(plain(html.slice(pos, m.index)));
     const i = +m[1];
     if (i >= 0 && i < smileCodes.length) { const img = el('img', 'sm' + (only ? ' big' : '')); img.src = `smiles/s${i}.webp`; img.alt = smileCodes[i]; node.append(img); }
     pos = re.lastIndex;
   }
-  if (pos < html.length) node.append(document.createTextNode(plain(html.slice(pos))));
+  if (pos < html.length) add(plain(html.slice(pos)));
 }
 
-// the smiley picker under the message box: tap a smiley to put its code into the text
+// the emoji picker under the message box (the animated Noto emoji, in categories). An emoji that has skin tones asks for one the
+// first time it is picked (five tones and the default yellow); the choice is kept and used from then on.
+let emoCat = 0;
+function insertAtCursor(input, text) {
+  const a = input.selectionStart ?? input.value.length, b = input.selectionEnd ?? a;
+  input.value = input.value.slice(0, a) + text + input.value.slice(b);
+  input.focus(); input.setSelectionRange(a + text.length, a + text.length);
+}
+function askTone(box, input, key, then) {
+  const ov = el('div', 'etoneask'), row = el('div', 'etonerow');
+  ov.append(el('b', '', 'Choose your skin tone'));
+  for (let t = 0; t <= 5; t++) {
+    const b = el('button'); b.type = 'button'; const im = el('img'); im.src = EMO.url(EMO.toneKey(key, t)); im.alt = ''; b.append(im);
+    b.onclick = () => { EMO.setTone(t); drawEmojiPicker(box, input); if (then) then(t); };
+    row.append(b);
+  }
+  ov.append(row); box.append(ov);
+}
+let emoQuery = '';
+function drawEmojiPicker(box, input, keepSearch) {
+  box.textContent = ''; box.classList.add('emo');
+  if (!EMO.ready) { box.append(el('p', 'sub', 'Loading…')); return; }
+  if (emoCat === 0 && !emoQuery && !drawEmojiPicker.started) { drawEmojiPicker.started = true; if (EMO.recent().length) emoCat = -1; }   // recent first, once there is some
+  const search = el('input', 'esearch'); search.type = 'search'; search.placeholder = 'Search emoji'; search.value = emoQuery; search.autocomplete = 'off';
+  const tabs = el('div', 'etabs');
+  const addTab = (icon, title, idx) => { const b = el('button', 'etab' + (!emoQuery && idx === emoCat ? ' on' : ''), icon); b.type = 'button'; b.title = title; b.onclick = () => { emoQuery = ''; emoCat = idx; drawEmojiPicker(box, input); }; tabs.append(b); };
+  if (EMO.recent().length) addTab('🕘', 'Recent', -1);
+  EMO.cats.forEach((c, i) => addTab(c.icon, c.title, i));
+  const tb = el('button', 'etab'); tb.type = 'button'; tb.title = 'Skin tone';
+  const ti = el('img'); ti.src = EMO.url(EMO.toneKey('1f44b', Math.max(EMO.tone(), 0))); ti.alt = ''; tb.append(ti);
+  tb.onclick = () => askTone(box, input, '1f44b', null); tabs.append(tb);
+  const grid = el('div', 'egrid'), tone = Math.max(EMO.tone(), 0);
+  const byKey = new Map(EMO.list.map((e) => [e[0], e]));
+  const items = emoQuery.trim() ? EMO.search(emoQuery) : emoCat < 0 ? EMO.recent().map((k) => byKey.get(k)).filter(Boolean) : EMO.list.filter((e) => e[1] === emoCat);
+  items.forEach((e) => {
+    const img = el('img'); img.src = EMO.url(EMO.toneKey(e[0], tone)); img.alt = EMO.charOf(e[0]); img.title = e[2]; img.dataset.key = e[0]; grid.append(img);
+  });
+  if (!items.length) grid.append(el('p', 'sub enone', emoQuery.trim() ? 'No emoji found' : 'Nothing here yet'));
+  const put = (key, t) => { EMO.pushRecent(key); insertAtCursor(input, EMO.charOf(EMO.toneKey(key, t))); };
+  grid.onclick = (ev) => {
+    const key = ev.target.dataset && ev.target.dataset.key; if (!key) return;
+    if (EMO.tonable.has(key) && EMO.tone() < 0) askTone(box, input, key, (t) => put(key, t));
+    else put(key, Math.max(EMO.tone(), 0));
+  };
+  search.oninput = () => { emoQuery = search.value; drawEmojiPicker(box, input, true); };
+  box.append(search, tabs, grid);
+  if (keepSearch) { search.focus(); search.setSelectionRange(search.value.length, search.value.length); }
+}
 function smilePicker(input, form) {
   const box = $('smilebox');
   if (!box.hidden && box.nextElementSibling === form) { box.hidden = true; return; }
-  if (!box.children.length) {
-    smileCodes.forEach((c, i) => { const img = el('img'); img.src = `smiles/s${i}.webp`; img.title = c; img.dataset.code = c; box.append(img); });
-  }
-  box.onclick = (e) => {
-    const c = e.target.dataset && e.target.dataset.code; if (!c) return;
-    const a = input.selectionStart ?? input.value.length;
-    input.value = input.value.slice(0, a) + c + ' ' + input.value.slice(input.selectionEnd ?? a);
-    input.focus(); input.setSelectionRange(a + c.length + 1, a + c.length + 1);
-  };
+  drawEmojiPicker(box, input);
+  document.addEventListener('emoji-ready', () => { if (!box.hidden) drawEmojiPicker(box, input); }, { once: true });
   form.before(box); box.hidden = false;
 }
 
@@ -840,7 +882,7 @@ function renderPM() {
       day = key; const today = new Date().toDateString(), y = new Date(Date.now() - 864e5).toDateString();
       box.append(el('div', 'day', key === today ? 'Today' : key === y ? 'Yesterday' : d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })));
     }
-    const mine = x.from === st.me, only = !plain(x.text).trim() && x.text.includes('data-s=');
+    const mine = x.from === st.me, only = (!plain(x.text).trim() && x.text.includes('data-s=')) || EMO.solo(plain(x.text));
     const b = el('div', 'bub' + (mine ? ' me' : '') + (only ? ' stk' : ''));
     const body = el('div', 'bt'); rich(body, x.text); b.append(body, el('div', 't', clock(t)));
     box.append(b);
