@@ -18,6 +18,7 @@
 <div id="login" class="screen pad">
   <img class="logo" src="logo.png" alt="">
   <h1>OldChatter</h1>
+  <select class="langsel" aria-label="Language"></select>
   <input id="user" placeholder="Username" autocapitalize="off" autocomplete="username">
   <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
   <button id="go">Sign in</button>
@@ -133,6 +134,9 @@
     <h4>Appearance</h4>
     <div class="group"><div class="opt"><span>Theme</span><span class="seg" id="themeseg"><button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></span></div></div>
 
+    <h4>Language</h4>
+    <div class="group"><div class="opt"><span>Language</span><select class="langsel" aria-label="Language"></select></div></div>
+
     <h4>Blocked users</h4>
     <div class="group" id="blocked"></div>
     <div class="addrow"><input id="blockname" placeholder="Block a user name" autocapitalize="off"><button id="blockgo" class="soft">Block</button></div>
@@ -147,6 +151,7 @@
 <div id="sheet" class="sheet" hidden></div>
 <div id="cpick" class="sheet tall" hidden></div>
 <div id="smilebox" class="smilebox" hidden></div>
+<script src="i18n.js"></script>
 <script src="config.js"></script>
 <script src="countries.js"></script>
 <script src="app.js"></script>

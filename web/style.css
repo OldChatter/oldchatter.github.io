@@ -216,6 +216,11 @@ input[type=password]{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-
 
 /* wide window (tablet, or a browser on Windows): rooms and contacts | chat | webcams and members */
 #deskhello{display:none}
+/* language picker */
+select.langsel{padding:10px 12px;border:1px solid var(--card);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;max-width:100%}
+#login select.langsel{align-self:center;margin-bottom:6px}
+.opt select.langsel{max-width:55%}
+html[dir=rtl] .back .ic,html[dir=rtl] .ob[data-ic=back] .ic{transform:scaleX(-1)}   /* the back arrow points the other way */
 @media (min-width:900px){
   body.desk{display:grid;grid-template-columns:minmax(300px,24vw) minmax(0,1fr);height:100dvh;overflow:hidden;background:var(--bg)}
   body.desk .screen{height:100dvh;min-height:0;grid-row:1}
