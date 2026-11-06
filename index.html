@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OldChatter</title>
-<meta name="description" content="OldChatter: voice and video chat rooms for Windows and Android.">
+<title data-i18n="title">OldChatter</title>
+<meta name="description" content="OldChatter: voice and video chat rooms for Windows and Android." id="metadesc">
 <meta name="theme-color" content="#0b0f17">
 <link rel="icon" href="img/logo.png">
 <style>
@@ -122,6 +122,17 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
 }
+
+@font-face{font-family:"Vazirmatn";src:url(web/fonts/Vazirmatn-Regular.woff2) format("woff2");font-weight:400 500;font-display:swap}
+@font-face{font-family:"Vazirmatn";src:url(web/fonts/Vazirmatn-Bold.woff2) format("woff2");font-weight:600 900;font-display:swap}
+html[lang=fa] body,html[lang=ar] body{font-family:Vazirmatn,system-ui,"Segoe UI",Tahoma,sans-serif}
+html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] .tag{letter-spacing:0}
+html[dir=rtl] .tag{text-transform:none}
+html[dir=rtl] .card::before{right:auto;left:-50px}
+html[dir=rtl] .stage{direction:ltr}
+.lang{appearance:none;-webkit-appearance:none;background:#ffffff12 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23f1f5fb' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 10px center;color:var(--fg);border:1px solid #ffffff22;border-radius:11px;padding:8px 30px 8px 12px;font:600 14px/1.2 system-ui,sans-serif;cursor:pointer}
+html[dir=rtl] .lang{background-position:left 10px center;padding:8px 12px 8px 30px}
+.lang option{background:#131c2c;color:#f1f5fb}
 </style>
 </head>
 <body>
@@ -129,27 +140,28 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 
 <nav><div class="wrap">
   <img src="img/logo.png" alt=""><b>OldChatter</b><span class="sp"></span>
-  <a class="btn sm" href="#get">Download</a>
+  <select id="lang" class="lang" aria-label="Language"></select>
+  <a class="btn sm" href="#get" data-i18n="nav_dl">Download</a>
 </div></nav>
 
 <div class="wrap">
   <div class="hero">
     <div>
-      <span class="pillt"><i></i> Rooms are open right now</span>
-      <h1>Talk. Show. <em>Hang out.</em></h1>
-      <p class="lead">Voice and video chat rooms in the classic style. Take the mic, switch on your webcam, and whisper to a friend.</p>
+      <span class="pillt"><i></i> <span data-i18n="pill">Rooms are open right now</span></span>
+      <h1><span data-i18n="h1a">Talk. Show. </span><em data-i18n="h1b">Hang out.</em></h1>
+      <p class="lead" data-i18n="lead">Voice and video chat rooms in the classic style. Take the mic, switch on your webcam, and whisper to a friend.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatterSetup.exe">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>
-          <span>Download for Windows<small>Windows 10 / 11</small></span></a>
+          <span><span data-i18n="dl_win">Download for Windows</span><small data-i18n="dl_win_sub">Windows 10 / 11</small></span></a>
         <a class="btn alt" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9h10v8a1 1 0 0 1-1 1h-1v3a1.2 1.2 0 0 1-2.4 0v-3h-1.2v3A1.2 1.2 0 0 1 9 21v-3H8a1 1 0 0 1-1-1zm-3 0a1.2 1.2 0 0 1 2.4 0v5A1.2 1.2 0 0 1 4 14zm14.6 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM7.2 8a4.8 4.8 0 0 1 9.6 0z"/></svg>
-          <span>Download for Android<small>Android 6 or newer</small></span></a>
+          <span><span data-i18n="dl_and">Download for Android</span><small data-i18n="dl_and_sub">Android 6 or newer</small></span></a>
       <a class="btn web" href="web/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-        <span>Open in browser<small>iPhone, Android, any computer</small></span></a>
+        <span><span data-i18n="dl_web">Open in browser</span><small data-i18n="dl_web_sub">iPhone, Android, any computer</small></span></a>
       </div>
-      <p class="hint">Free account. Always the latest version.</p>
+      <p class="hint" data-i18n="hint">Free account. Always the latest version.</p>
     </div>
 
     <div class="stage">
@@ -162,71 +174,93 @@ footer{padding:36px 0 50px;text-align:center;color:var(--mute);font-size:14px}
 
 <div class="wrap">
 <section>
-  <div class="tag rv">On Windows</div>
-  <h2 class="rv">The room, on your desktop</h2>
-  <p class="sub rv">Chat, voice and webcam in one familiar window.</p>
-  <div class="shot rv"><img src="img/windows.png" alt="OldChatter room window on Windows: chat with animated smileys, member list, mic and webcam"></div>
+  <div class="tag rv" data-i18n="win_tag">On Windows</div>
+  <h2 class="rv" data-i18n="win_h2">The room, on your desktop</h2>
+  <p class="sub rv" data-i18n="win_sub">Chat, voice and webcam in one familiar window.</p>
+  <div class="shot rv"><img src="img/windows.png" alt="OldChatter room window on Windows: chat with animated smileys, member list, mic and webcam" data-i18n-alt="win_alt"></div>
 </section>
 
 <section>
-  <div class="tag rv">Features</div>
-  <h2 class="rv">Everything a chat room needs</h2>
-  <p class="sub rv">Simple to join, fun to stay in.</p>
+  <div class="tag rv" data-i18n="feat_tag">Features</div>
+  <h2 class="rv" data-i18n="feat_h2">Everything a chat room needs</h2>
+  <p class="sub rv" data-i18n="feat_sub">Simple to join, fun to stay in.</p>
   <div class="grid">
-    <div class="card rv" style="--c:#2b8cf0"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Public rooms</h3><p>Rooms sorted into categories. Pick one, step in, and start talking.</p></div>
-    <div class="card rv" style="--c:#27d3e6"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></div><h3>Live voice</h3><p>Take the mic when it is your turn and the whole room hears you.</p></div>
-    <div class="card rv" style="--c:#ff5fa2"><div class="ic"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3>Webcam</h3><p>Share your camera with the room, and watch others who share theirs.</p></div>
-    <div class="card rv" style="--c:#ffc83d"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><h3>Animated smileys</h3><p>A full pack of animated smileys to say what words can not.</p></div>
-    <div class="card rv" style="--c:#2ee08a"><div class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div><h3>Contacts and whispers</h3><p>Keep your friends in a list, see who is online, message or whisper to them.</p></div>
-    <div class="card rv" style="--c:#a56bff"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>You choose who reaches you</h3><p>Allow messages, invitations and whispers from everyone, or only from your contacts.</p></div>
+    <div class="card rv" style="--c:#2b8cf0"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3 data-i18n="f1t">Public rooms</h3><p data-i18n="f1p">Rooms sorted into categories. Pick one, step in, and start talking.</p></div>
+    <div class="card rv" style="--c:#27d3e6"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></div><h3 data-i18n="f2t">Live voice</h3><p data-i18n="f2p">Take the mic when it is your turn and the whole room hears you.</p></div>
+    <div class="card rv" style="--c:#ff5fa2"><div class="ic"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3 data-i18n="f3t">Webcam</h3><p data-i18n="f3p">Share your camera with the room, and watch others who share theirs.</p></div>
+    <div class="card rv" style="--c:#ffc83d"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><h3 data-i18n="f4t">Animated smileys</h3><p data-i18n="f4p">A full pack of animated smileys to say what words can not.</p></div>
+    <div class="card rv" style="--c:#2ee08a"><div class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div><h3 data-i18n="f5t">Contacts and whispers</h3><p data-i18n="f5p">Keep your friends in a list, see who is online, message or whisper to them.</p></div>
+    <div class="card rv" style="--c:#a56bff"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 data-i18n="f6t">You choose who reaches you</h3><p data-i18n="f6p">Allow messages, invitations and whispers from everyone, or only from your contacts.</p></div>
   </div>
 </section>
 
 <section>
-  <div class="tag rv">How it works</div>
-  <h2 class="rv">In the room in a minute</h2>
-  <p class="sub rv">No setup, no fuss.</p>
+  <div class="tag rv" data-i18n="how_tag">How it works</div>
+  <h2 class="rv" data-i18n="how_h2">In the room in a minute</h2>
+  <p class="sub rv" data-i18n="how_sub">No setup, no fuss.</p>
   <div class="steps">
-    <div class="step rv"><h3>Download</h3><p>Get the app for Windows or Android, or open it in your browser.</p></div>
-    <div class="step rv"><h3>Sign up free</h3><p>Create your account inside the app.</p></div>
-    <div class="step rv"><h3>Join a room</h3><p>Choose a category, pick a room, say hello.</p></div>
+    <div class="step rv"><h3 data-i18n="s1t">Download</h3><p data-i18n="s1p">Get the app for Windows or Android, or open it in your browser.</p></div>
+    <div class="step rv"><h3 data-i18n="s2t">Sign up free</h3><p data-i18n="s2p">Create your account inside the app.</p></div>
+    <div class="step rv"><h3 data-i18n="s3t">Join a room</h3><p data-i18n="s3p">Choose a category, pick a room, say hello.</p></div>
   </div>
 </section>
 
 <section>
-  <div class="tag rv">Everywhere you are</div>
-  <h2 class="rv">One account, every device</h2>
-  <p class="sub rv">Your rooms and contacts follow you.</p>
+  <div class="tag rv" data-i18n="ev_tag">Everywhere you are</div>
+  <h2 class="rv" data-i18n="ev_h2">One account, every device</h2>
+  <p class="sub rv" data-i18n="ev_sub">Your rooms and contacts follow you.</p>
   <div class="plat">
-    <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><h3>Windows</h3><p>Desktop app, Windows 10 and 11</p></div>
-    <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><h3>Android</h3><p>Phone app, Android 6 or newer</p></div>
-    <div class="pl rv"><svg viewBox="0 0 24 24"><path d="M22 3 2 11l6 2 2 7 3-4 5 4z"/></svg><h3>Web app</h3><p>Any browser. Add it to your iPhone or Android home screen</p></div>
+    <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><h3>Windows</h3><p data-i18n="pl_win_p">Desktop app, Windows 10 and 11</p></div>
+    <div class="pl rv"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><h3>Android</h3><p data-i18n="pl_and_p">Phone app, Android 6 or newer</p></div>
+    <div class="pl rv"><svg viewBox="0 0 24 24"><path d="M22 3 2 11l6 2 2 7 3-4 5 4z"/></svg><h3 data-i18n="pl_web_t">Web app</h3><p data-i18n="pl_web_p">Any browser. Add it to your iPhone or Android home screen</p></div>
   </div>
 </section>
 
 <section id="get">
   <div class="final rv">
     
-    <h2>Your room is waiting</h2>
-    <p>Download OldChatter and say hello.</p>
+    <h2 data-i18n="fin_h2">Your room is waiting</h2>
+    <p data-i18n="fin_p">Download OldChatter and say hello.</p>
     <div class="cta">
       <a class="btn" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatterSetup.exe">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>
-        <span>Download for Windows<small>Windows 10 / 11</small></span></a>
+        <span><span data-i18n="dl_win">Download for Windows</span><small data-i18n="dl_win_sub">Windows 10 / 11</small></span></a>
       <a class="btn alt" href="https://github.com/OldChatter/oldchatter.github.io/releases/latest/download/OldChatter.apk">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9h10v8a1 1 0 0 1-1 1h-1v3a1.2 1.2 0 0 1-2.4 0v-3h-1.2v3A1.2 1.2 0 0 1 9 21v-3H8a1 1 0 0 1-1-1zm-3 0a1.2 1.2 0 0 1 2.4 0v5A1.2 1.2 0 0 1 4 14zm14.6 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM7.2 8a4.8 4.8 0 0 1 9.6 0z"/></svg>
-        <span>Download for Android<small>Android 6 or newer</small></span></a>
+        <span><span data-i18n="dl_and">Download for Android</span><small data-i18n="dl_and_sub">Android 6 or newer</small></span></a>
       <a class="btn web" href="web/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-        <span>Open in browser<small>iPhone, Android, any computer</small></span></a>
+        <span><span data-i18n="dl_web">Open in browser</span><small data-i18n="dl_web_sub">iPhone, Android, any computer</small></span></a>
     </div>
-    <p style="margin-top:18px;font-size:13px;color:#c5d6f2">Windows may show an unknown-publisher warning because the installer is not code-signed. Choose More info, then Run anyway.</p>
+    <p data-i18n="fin_note" style="margin-top:18px;font-size:13px;color:#c5d6f2">Windows may show an unknown-publisher warning because the installer is not code-signed. Choose More info, then Run anyway.</p>
   </div>
 </section>
 </div>
 <footer>OldChatter</footer>
 
+<script src="lang.js"></script>
 <script>
+// language: ?lang=xx, then the saved choice, then the browser's language, else English
+(function () {
+  var sel = document.getElementById('lang'), codes = LANGS.map(function (l) { return l[0]; });
+  LANGS.forEach(function (l) { var o = document.createElement('option'); o.value = l[0]; o.textContent = l[1]; sel.appendChild(o); });
+  function pick() {
+    var q = /[?&]lang=([a-z]{2})/.exec(location.search); if (q && codes.indexOf(q[1]) >= 0) return q[1];
+    try { var s = localStorage.getItem('lang'); if (s && codes.indexOf(s) >= 0) return s; } catch (e) { /* storage blocked */ }
+    var prefs = navigator.languages || [navigator.language || 'en'];
+    for (var i = 0; i < prefs.length; i++) { var c = String(prefs[i]).toLowerCase().slice(0, 2); if (codes.indexOf(c) >= 0) return c; }
+    return 'en';
+  }
+  function t(code, key) { return (T[code] && T[code][key] != null) ? T[code][key] : T.en[key]; }
+  function apply(code) {
+    document.documentElement.lang = code; document.documentElement.dir = RTL[code] ? 'rtl' : 'ltr'; sel.value = code;
+    document.querySelectorAll('[data-i18n]').forEach(function (e) { e.textContent = t(code, e.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (e) { e.setAttribute('alt', t(code, e.getAttribute('data-i18n-alt'))); });
+    document.getElementById('metadesc').setAttribute('content', t(code, 'desc')); document.title = t(code, 'title');
+  }
+  sel.onchange = function () { try { localStorage.setItem('lang', sel.value); } catch (e) { /* ignore */ } apply(sel.value); };
+  apply(pick());
+})();
 
 // reveal on scroll
 var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .15 });
