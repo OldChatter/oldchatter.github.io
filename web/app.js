@@ -245,6 +245,7 @@ function handle(m) {
       }
       renderUsers(); break;
     case 'users': setUsers(m.users); break;
+    case 'order': st.order = m.names || []; renderUsers(); break;   // the list order is decided by the server, the same for everybody
     case 'roomclosed': case 'bounced': leaveRoomUI(m.t === 'bounced' ? 'You were removed from the room.' : 'The room was closed.', true); break;
     case 'whisper': sysLine($('lines'), m.from === st.me ? `(whisper to ${m.to}) ${m.text}` : `(whisper) ${m.from}: ${m.text}`); break;
     case 'invite':
@@ -540,7 +541,7 @@ function renderStrip() {
 }
 
 function setUsers(list) {
-  st.users = {}; (list || []).forEach((u) => { st.users[u.name] = u; wantInfo(u.name); });
+  st.users = {}; st.order = (list || []).map((u) => u.name); (list || []).forEach((u) => { st.users[u.name] = u; wantInfo(u.name); });
   // a webcam that starts opens by itself at the top of the room; closing it keeps it closed until they restart
   for (const u of Object.values(st.users)) considerCam(u);
   for (const n of [...media.watching]) if (!st.users[n]) { media.watching.delete(n); dropTile(n); }
@@ -554,7 +555,8 @@ function considerCam(u) {
 }
 
 function renderUsers() {
-  const names = Object.keys(st.users).sort((a, b) => (st.users[b].admin || 0) - (st.users[a].admin || 0) || a.toLowerCase().localeCompare(b.toLowerCase()));
+  const pos = new Map((st.order || []).map((n, i) => [n, i]));   // server order: mic, raised hands, who just let go, the rest
+  const names = Object.keys(st.users).sort((a, b) => (pos.get(a) ?? 1e9) - (pos.get(b) ?? 1e9) || a.toLowerCase().localeCompare(b.toLowerCase()));
   $('usercount').textContent = names.length; renderStrip();
   const box = $('userlist'); box.textContent = '';
   box.append(el('h3', '', `Members (${names.length})`));
